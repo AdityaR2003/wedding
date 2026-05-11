@@ -12,7 +12,7 @@ import { Section } from "@/components/Section";
 import { SandeshPatr } from "@/components/SandeshPatr";
 import { Phone, MessageSquare, Send } from "lucide-react";
 
-import { Petals, GoldenParticles } from "@/components/Petals";
+import { GoldenParticles } from "@/components/Petals";
 import { RitualCard } from "@/components/RitualCard";
 import { WeddingBox } from "@/components/WeddingBox";
 
@@ -93,6 +93,7 @@ const SectionNavButtons = ({ nextId, backId, nextLabel = "NEXT", backLabel = "BA
 
 function Welcome() {
   const [opened, setOpened] = useState(false);
+  const [revealed, setRevealed] = useState(false);
 
   const [boxOpened, setBoxOpened] = useState(false);
   const { guest } = Route.useSearch();
@@ -100,7 +101,7 @@ function Welcome() {
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden bg-[#fdf2f8]">
-      {boxOpened && <Petals count={40} />}
+
       <GoldenParticles count={30} />
       
       {!boxOpened && (
@@ -174,30 +175,35 @@ function Welcome() {
 
       {/* All sections */}
       {opened && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-        >
-          <HomeSection guestName={guestName} />
-          <StorySection />
-          <RitualsHub guestName={guestName} />
-          <VenueSection />
-          <FamilySection guestName={guestName} />
-          <WishingAndWellwingsSection guestName={guestName} />
-
-
-          <AcceptInvitationSection guestName={guestName} />
-          <CountdownSection />
-          <GetInTouchSection />
-        </motion.div>
+        <div className="flex flex-col">
+          <HomeSection guestName={guestName} revealed={revealed} setRevealed={setRevealed} />
+          
+          <AnimatePresence>
+            {revealed && (
+              <motion.div
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8 }}
+              >
+                <StorySection />
+                <RitualsHub guestName={guestName} />
+                <VenueSection />
+                <FamilySection guestName={guestName} />
+                <WishingAndWellwingsSection guestName={guestName} />
+                <AcceptInvitationSection guestName={guestName} />
+                <CountdownSection />
+                <GetInTouchSection />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       )}
     </div>
   );
 }
 
 /* ======================== HOME ======================== */
-function HomeSection({ guestName }: { guestName: string }) {
+function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, revealed: boolean, setRevealed: (v: boolean) => void }) {
   return (
     <Section id="home" accent="oklch(0.34 0.13 18)" className="min-h-screen flex items-center justify-center">
       <div className="flex flex-col items-center text-center">
@@ -375,14 +381,26 @@ function HomeSection({ guestName }: { guestName: string }) {
           <Diya size={60} />
         </div>
 
-        <button
-          onClick={() => document.getElementById("story")?.scrollIntoView({ behavior: "smooth" })}
-          className="mt-12 rounded-full border border-gold bg-gradient-to-r from-[oklch(0.78_0.14_80)] to-[oklch(0.65_0.13_60)] px-10 py-3 font-display text-sm tracking-[0.3em] text-maroon-deep shadow-[0_10px_40px_-10px_oklch(0.78_0.14_80)] transition hover:scale-105"
-        >
-          BEGIN OUR STORY ↓
-        </button>
-
-        <SectionNavButtons nextId="story" />
+        {!revealed ? (
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => setRevealed(true)}
+            className="mt-12 rounded-full border-2 border-gold bg-gradient-to-r from-gold via-amber-200 to-gold px-12 py-4 font-display text-base font-bold tracking-[0.3em] text-maroon-deep shadow-[0_0_30px_rgba(255,215,0,0.4)] transition"
+          >
+            INVITATION IS OPEN
+          </motion.button>
+        ) : (
+          <div className="flex flex-col items-center gap-4">
+            <button
+              onClick={() => document.getElementById("story")?.scrollIntoView({ behavior: "smooth" })}
+              className="mt-12 rounded-full border border-gold bg-gradient-to-r from-[oklch(0.78_0.14_80)] to-[oklch(0.65_0.13_60)] px-10 py-3 font-display text-sm tracking-[0.3em] text-maroon-deep shadow-[0_10px_40px_-10px_oklch(0.78_0.14_80)] transition hover:scale-105"
+            >
+              BEGIN OUR STORY ↓
+            </button>
+            <SectionNavButtons nextId="story" />
+          </div>
+        )}
       </div>
     </Section>
   );

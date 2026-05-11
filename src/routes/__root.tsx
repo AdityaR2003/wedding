@@ -77,7 +77,6 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
   return (
     <QueryClientProvider client={queryClient}>
-      <Petals />
       <GoldenParticles />
       <SparkleCursor />
       <Outlet />
