@@ -100,7 +100,7 @@ function Welcome() {
   const guestName = guest || "Rohit Sharma";
 
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden bg-[#fdf2f8]">
+    <div className="relative min-h-screen w-full overflow-x-hidden bg-[#1a0505]">
 
       <GoldenParticles count={30} />
       
