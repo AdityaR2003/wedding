@@ -110,7 +110,7 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
               </div>
 
               {/* Welcome Text */}
-              <h2 className="font-script text-4xl text-gold-gradient text-center mb-2">Welcome in Wedding</h2>
+              <h2 className="font-deva text-5xl text-gold-gradient text-center mb-2 drop-shadow-md">शुभ विवाह</h2>
               
               {/* Guest Name */}
               <div className="relative py-4 px-6 border-y border-gold/30 my-4">

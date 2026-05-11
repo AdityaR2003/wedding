@@ -5,13 +5,13 @@ import { z } from "zod";
 import { Heart, MessageCircle, Coffee, Gem, Users, MapPin } from "lucide-react";
 import ganesha from "@/assets/ganesha.png";
 import templeDoor from "@/assets/temple-door.jpg";
-import templeGate from "@/assets/temple-gate.png";
+import templeGate from "@/assets/clean_temple_gate.png";
 import { Diya } from "@/components/Diya";
 import { OrnateDivider } from "@/components/PageShell";
 import { Section } from "@/components/Section";
 import { SandeshPatr } from "@/components/SandeshPatr";
 import { Phone, MessageSquare, Send } from "lucide-react";
-import { ScratchInvitation } from "@/components/ScratchInvitation";
+
 import { Petals, GoldenParticles } from "@/components/Petals";
 import { RitualCard } from "@/components/RitualCard";
 import { WeddingBox } from "@/components/WeddingBox";
@@ -53,16 +53,54 @@ export const Route = createFileRoute("/")({
   component: Welcome,
 });
 
+const SectionNavButtons = ({ nextId, backId, nextLabel = "NEXT", backLabel = "BACK" }: { nextId?: string, backId?: string, nextLabel?: string, backLabel?: string }) => {
+  const scrollTo = (id: string) => {
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
+  return (
+    <div className="mt-8 flex items-center justify-between gap-4 px-4 w-full max-w-4xl mx-auto">
+      <div className="flex-1">
+        {backId && (
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => scrollTo(backId)}
+            className="flex items-center gap-2 rounded-full border border-gold/40 bg-black/40 px-6 py-2 font-display text-[9px] tracking-[0.2em] text-gold transition hover:bg-gold hover:text-maroon-deep backdrop-blur-md shadow-lg"
+          >
+            ← {backLabel}
+          </motion.button>
+        )}
+      </div>
+      <div className="flex-1 flex justify-end">
+        {nextId && (
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => scrollTo(nextId)}
+            className="flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-6 py-2 font-display text-[9px] tracking-[0.2em] text-gold transition hover:bg-gold hover:text-maroon-deep backdrop-blur-md shadow-[0_0_15px_rgba(255,215,0,0.2)]"
+          >
+            {nextLabel} →
+          </motion.button>
+        )}
+      </div>
+    </div>
+  );
+};
+
 function Welcome() {
   const [opened, setOpened] = useState(false);
-  const [envelopeOpened, setEnvelopeOpened] = useState(false);
+
   const [boxOpened, setBoxOpened] = useState(false);
   const { guest } = Route.useSearch();
   const guestName = guest || "Rohit Sharma";
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden bg-[#fdf2f8]">
-      <Petals count={20} />
+      {boxOpened && <Petals count={40} />}
       <GoldenParticles count={30} />
       
       {!boxOpened && (
@@ -72,15 +110,7 @@ function Welcome() {
         />
       )}
 
-      {boxOpened && !envelopeOpened && (
-        <ScratchInvitation 
-          guestName={guestName} 
-          onComplete={() => {
-            setEnvelopeOpened(true);
-            setOpened(true);
-          }} 
-        />
-      )}
+
 
 
 
@@ -143,7 +173,7 @@ function Welcome() {
       </AnimatePresence>
 
       {/* All sections */}
-      {envelopeOpened && (
+      {opened && (
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -351,6 +381,8 @@ function HomeSection({ guestName }: { guestName: string }) {
         >
           BEGIN OUR STORY ↓
         </button>
+
+        <SectionNavButtons nextId="story" />
       </div>
     </Section>
   );
@@ -387,7 +419,7 @@ function StorySection() {
                   <m.icon className="h-5 w-5" />
                 </div>
               </div>
-              <div className="ml-16 w-full md:ml-0 md:w-1/2 md:px-10">
+              <div className="ml-16 w-full md:ml-0 md:w-1/2 md:px-10" id={`moment-${i}`}>
                 <div className="group overflow-hidden rounded-2xl border border-gold/40 bg-maroon-deep/60 backdrop-blur-sm transition-all hover:border-gold hover:shadow-[0_0_30px_rgba(255,215,0,0.2)]">
                   {m.img && (
                     <div className="h-48 w-full overflow-hidden border-b border-gold/20">
@@ -404,6 +436,18 @@ function StorySection() {
                     <p className="font-display text-xs tracking-[0.3em] text-gold/80">{m.date}</p>
                     <h3 className="mt-2 font-script text-3xl text-ivory">{m.title}</h3>
                     <p className="mt-3 font-serif text-ivory/85 leading-relaxed">{m.text}</p>
+                    
+                    {/* Inner moment navigation */}
+                    <div className="mt-6 flex justify-between gap-4">
+                      {i > 0 && (
+                        <button onClick={() => document.getElementById(`moment-${i-1}`)?.scrollIntoView({ behavior: "smooth" })} className="text-gold/60 text-[8px] hover:text-gold uppercase tracking-widest">← Previous</button>
+                      )}
+                      {i < moments.length - 1 ? (
+                        <button onClick={() => document.getElementById(`moment-${i+1}`)?.scrollIntoView({ behavior: "smooth" })} className="text-gold/60 text-[8px] hover:text-gold uppercase tracking-widest ml-auto">Next Moment →</button>
+                      ) : (
+                        <button onClick={() => document.getElementById("rituals")?.scrollIntoView({ behavior: "smooth" })} className="text-gold/60 text-[8px] hover:text-gold uppercase tracking-widest ml-auto">To Rituals ↓</button>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -411,6 +455,7 @@ function StorySection() {
             </motion.div>
           ))}
         </div>
+        <SectionNavButtons backId="home" nextId="rituals" />
       </div>
     </Section>
   );
@@ -521,19 +566,19 @@ function FamilySection({ guestName }: { guestName: string }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: i * 0.15 }}
-                  className="rounded-2xl border border-maroon/20 bg-maroon/5 p-8 backdrop-blur-sm shadow-sm"
+                  className="rounded-xl border border-gold/40 bg-black/40 p-5 backdrop-blur-md shadow-sm transition-all hover:border-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.2)]"
                 >
-                  <p className="font-display text-xs tracking-[0.4em] text-maroon/60">{f.title}</p>
-                  <h3 className="mt-2 font-script text-4xl text-maroon-deep">{f.name}</h3>
+                  <p className="font-display text-xs tracking-[0.4em] text-gold/80">{f.title}</p>
+                  <h3 className="mt-2 font-script text-4xl text-ivory">{f.name}</h3>
                   <div className="mt-6 space-y-4">
                     {f.members.map((m) => (
-                      <div key={m.name} className="flex items-center gap-4 rounded-xl border border-gold/10 bg-maroon/5 p-4 transition-all hover:bg-maroon/10">
+                      <div key={m.name} className="flex items-center gap-4 rounded-lg border border-gold/20 bg-black/30 p-3 transition-all hover:border-gold/50">
                         <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-full border-2 border-gold/40 shadow-md">
                           <img src={m.img} alt={m.name} className="h-full w-full object-cover" />
                         </div>
                         <div>
-                          <p className="font-display text-[9px] tracking-[0.3em] text-maroon/60 uppercase">{m.role}</p>
-                          <p className="font-serif text-lg leading-tight text-maroon-deep">{m.name}</p>
+                          <p className="font-display text-[9px] tracking-[0.3em] text-gold/60 uppercase">{m.role}</p>
+                          <p className="font-serif text-lg leading-tight text-ivory/90">{m.name}</p>
                         </div>
                       </div>
                     ))}
@@ -543,6 +588,7 @@ function FamilySection({ guestName }: { guestName: string }) {
             </div>
           </SandeshPatr>
         </div>
+        <SectionNavButtons backId="venue" nextId="wishes" />
       </div>
     </Section>
   );
@@ -587,7 +633,7 @@ function WishingAndWellwingsSection({ guestName }: { guestName: string }) {
   return (
     <Section id="wishes" accent="oklch(0.95 0.05 340)">
       <div className="mx-auto max-w-4xl text-center">
-        <p className="font-display text-[10px] tracking-[0.5em] text-maroon/60 uppercase">Share Your Love</p>
+        <p className="font-display text-xl tracking-[0.3em] text-gold uppercase drop-shadow-sm">Share Your Love</p>
         <h2 className="mt-2 font-script text-5xl text-maroon-deep md:text-6xl">Wishing & Wellwings</h2>
         <OrnateDivider />
 
@@ -603,7 +649,7 @@ function WishingAndWellwingsSection({ guestName }: { guestName: string }) {
                   exit={{ opacity: 0 }}
                   className="w-full"
                 >
-                  <div className="rounded-2xl border border-maroon/10 bg-white/40 p-6 text-center">
+                  <div className="rounded-xl border border-gold/40 bg-black/40 p-5 text-center backdrop-blur-md">
                     <motion.div 
                       initial={{ scale: 0 }}
                       animate={{ scale: 1 }}
@@ -612,13 +658,13 @@ function WishingAndWellwingsSection({ guestName }: { guestName: string }) {
                     >
                       🙏
                     </motion.div>
-                    <h3 className="font-script text-3xl text-maroon-deep mb-2">Thank You, {name || "Guest"}!</h3>
-                    <p className="font-serif italic text-maroon/60 text-sm mb-6">
+                    <h3 className="font-script text-3xl text-ivory mb-2">Thank You, {name || "Guest"}!</h3>
+                    <p className="font-serif italic text-ivory/70 text-sm mb-6">
                       Your heartfelt wishes mean the world to Ravi & Ranjana.
                     </p>
                     <button
                       onClick={() => { setSent(false); setMessage(""); }}
-                      className="rounded-full border border-maroon/20 bg-maroon/5 px-8 py-2 font-display text-[10px] tracking-[0.2em] text-maroon-deep hover:bg-maroon/10 transition-all uppercase"
+                      className="rounded-full border border-gold/40 bg-gold/10 px-8 py-2 font-display text-[10px] tracking-[0.2em] text-gold hover:bg-gold/20 transition-all uppercase"
                     >
                       Send Another ✦
                     </button>
@@ -630,38 +676,38 @@ function WishingAndWellwingsSection({ guestName }: { guestName: string }) {
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="rounded-2xl border border-maroon/10 bg-white/40 p-6 backdrop-blur-md shadow-sm text-left"
+                  className="rounded-xl border border-gold/40 bg-black/40 p-5 backdrop-blur-md shadow-sm text-left transition-all hover:border-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.2)]"
                 >
                   <div className="space-y-4">
                     <label className="block">
-                      <span className="font-display text-[9px] tracking-[0.2em] text-maroon/60 uppercase">Your Name</span>
+                      <span className="font-display text-[9px] tracking-[0.2em] text-gold/80 uppercase">Your Name</span>
                       <input
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         placeholder="Enter your name"
-                        className="mt-1.5 w-full rounded-lg border border-maroon/10 bg-white/60 p-3 font-serif text-maroon-deep placeholder:text-maroon/30 focus:border-maroon/40 focus:outline-none text-sm"
+                        className="mt-1.5 w-full rounded-lg border border-gold/30 bg-black/20 p-3 font-serif text-ivory placeholder:text-ivory/40 focus:border-gold/60 focus:outline-none text-sm"
                       />
                     </label>
 
                     <label className="block">
-                      <span className="font-display text-[9px] tracking-[0.2em] text-maroon/60 uppercase">Your Message</span>
+                      <span className="font-display text-[9px] tracking-[0.2em] text-gold/80 uppercase">Your Message</span>
                       <textarea
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         rows={4}
                         maxLength={500}
                         placeholder="Share your heartfelt wishes..."
-                        className="mt-1.5 w-full resize-none rounded-lg border border-maroon/10 bg-white/60 p-3 font-serif text-maroon-deep placeholder:text-maroon/30 focus:border-maroon/40 focus:outline-none text-sm"
+                        className="mt-1.5 w-full resize-none rounded-lg border border-gold/30 bg-black/20 p-3 font-serif text-ivory placeholder:text-ivory/40 focus:border-gold/60 focus:outline-none text-sm"
                       />
-                      <p className="mt-1 text-right font-display text-[8px] text-maroon/40">{message.length}/500</p>
+                      <p className="mt-1 text-right font-display text-[8px] text-ivory/50">{message.length}/500</p>
                     </label>
 
                     <div className="flex flex-col gap-3">
                       <button
                         onClick={handleSend}
                         disabled={!message.trim()}
-                        className="flex items-center justify-center gap-2 w-full rounded-full border border-maroon/20 bg-maroon/5 py-2.5 font-display text-[10px] tracking-[0.2em] text-maroon-deep shadow-sm hover:bg-maroon/10 active:scale-95 transition disabled:opacity-40 uppercase font-bold"
+                        className="flex items-center justify-center gap-2 w-full rounded-full border border-gold/40 bg-gold/10 py-2.5 font-display text-[10px] tracking-[0.2em] text-gold shadow-sm hover:bg-gold/20 active:scale-95 transition disabled:opacity-40 uppercase font-bold"
                       >
                         <Send className="h-3 w-3" /> Share Message
                       </button>
@@ -682,12 +728,12 @@ function WishingAndWellwingsSection({ guestName }: { guestName: string }) {
                     initial={{ opacity: 0, x: 20 }}
                     animate={{ opacity: 1, x: 0 }}
                     transition={{ duration: 0.5, delay: i * 0.05 }}
-                    className="relative rounded-xl border border-maroon/5 bg-white/30 p-4 backdrop-blur-sm text-left group hover:border-maroon/10 transition-colors"
+                    className="relative rounded-lg border border-gold/30 bg-black/30 p-3 backdrop-blur-md text-left group hover:border-gold/50 transition-all"
                   >
-                    <p className="font-script text-2xl text-maroon-deep mb-2 opacity-80">"{b.text}"</p>
+                    <p className="font-script text-xl text-ivory mb-2 opacity-90">"{b.text}"</p>
                     <div className="flex items-center gap-2">
-                      <div className="h-px w-6 bg-maroon/20" />
-                      <p className="font-display text-[9px] tracking-[0.2em] text-maroon/60 uppercase font-semibold">{b.name}</p>
+                      <div className="h-px w-6 bg-gold/40" />
+                      <p className="font-display text-[9px] tracking-[0.2em] text-gold/80 uppercase font-semibold">{b.name}</p>
                     </div>
                   </motion.div>
                 ))}
@@ -698,6 +744,7 @@ function WishingAndWellwingsSection({ guestName }: { guestName: string }) {
             <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#fdf2f8] to-transparent" />
           </div>
         </div>
+        <SectionNavButtons backId="family" nextId="accept" />
       </div>
     </Section>
   );
@@ -724,9 +771,22 @@ function RitualsHub({ guestName }: { guestName: string }) {
         {/* Uniform 5-card grid — all same fixed height */}
         <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
           {rituals.map((r, i) => (
-            <RitualCard key={r.id} ritual={r} index={i} />
+            <div key={r.id} id={`ritual-sec-${i}`}>
+              <RitualCard ritual={r} index={i} />
+              <div className="mt-4 flex justify-between px-2">
+                {i > 0 && (
+                  <button onClick={() => document.getElementById(`ritual-sec-${i-1}`)?.scrollIntoView({ behavior: "smooth" })} className="text-gold/50 text-[7px] tracking-[0.2em] hover:text-gold uppercase">← Prev Ritual</button>
+                )}
+                {i < rituals.length - 1 ? (
+                  <button onClick={() => document.getElementById(`ritual-sec-${i+1}`)?.scrollIntoView({ behavior: "smooth" })} className="text-gold/50 text-[7px] tracking-[0.2em] hover:text-gold uppercase ml-auto">Next Ritual →</button>
+                ) : (
+                  <button onClick={() => document.getElementById("venue")?.scrollIntoView({ behavior: "smooth" })} className="text-gold/50 text-[7px] tracking-[0.2em] hover:text-gold uppercase ml-auto">To Venue ↓</button>
+                )}
+              </div>
+            </div>
           ))}
         </div>
+        <SectionNavButtons backId="story" nextId="venue" />
       </div>
     </Section>
   );
@@ -816,6 +876,7 @@ function VenueSection() {
 
           </div>
         </div>
+        <SectionNavButtons backId="rituals" nextId="family" />
       </div>
     </Section>
   );
@@ -851,6 +912,7 @@ function CountdownSection() {
           ))}
         </div>
         <p className="mt-10 font-serif italic text-ivory/85">Counting every breath until 14 · June · 2026</p>
+        <SectionNavButtons backId="accept" nextId="contact" />
       </div>
     </Section>
   );
@@ -957,7 +1019,7 @@ function AcceptInvitationSection({ guestName }: { guestName: string }) {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
-            className="mt-8 rounded-3xl border border-gold/40 bg-maroon-deep/70 p-10 backdrop-blur-md shadow-2xl"
+            className="mt-8 rounded-xl border border-gold/40 bg-black/40 p-6 backdrop-blur-md shadow-2xl transition-all hover:border-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.2)]"
           >
             <p className="font-script text-3xl text-gold/90">Dear {guestName},</p>
             <p className="mt-5 font-serif text-xl leading-relaxed text-ivory/90 md:text-2xl">
@@ -974,7 +1036,8 @@ function AcceptInvitationSection({ guestName }: { guestName: string }) {
             </motion.button>
           </motion.div>
         </div>
-      </Section>
+        <SectionNavButtons backId="wishes" nextId="countdown" />
+    </Section>
     </>
   );
 }
@@ -998,21 +1061,31 @@ function GetInTouchSection() {
         <OrnateDivider />
         <div className="mt-10 grid gap-6 md:grid-cols-2 md:px-20 text-center">
         {contacts.map((c) => (
-          <div key={c.name} className="flex flex-col items-center rounded-2xl border border-maroon/10 bg-white/40 p-6 backdrop-blur-sm shadow-sm">
-            <p className="font-display text-[9px] tracking-[0.3em] text-maroon/60 uppercase">{c.role}</p>
-            <p className="mt-1 font-serif text-xl text-maroon-deep">{c.name}</p>
-            <div className="mt-4 flex items-center gap-3">
+          <div key={c.name} className="flex flex-col items-center rounded-xl border border-gold/40 bg-black/40 p-5 backdrop-blur-md shadow-sm transition-all hover:border-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.2)]">
+            <p className="font-display text-[9px] tracking-[0.3em] text-gold/80 uppercase">{c.role}</p>
+            <p className="mt-1 font-serif text-xl text-ivory">{c.name}</p>
+            <div className="mt-4 flex flex-col md:flex-row items-center gap-3">
               <a 
                 href={`tel:${c.phone.replace(/\D/g, "")}`} 
-                className="flex items-center gap-2 rounded-full border border-maroon/20 bg-maroon/5 px-4 py-2 text-maroon-deep hover:bg-maroon/10 transition-all shadow-sm"
+                className="flex items-center justify-center w-full md:w-auto gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-2 text-gold hover:bg-gold/20 transition-all shadow-sm"
               >
                 <Phone className="h-4 w-4" />
                 <span className="font-display tracking-[0.1em] text-[10px] uppercase font-semibold">{c.phone}</span>
+              </a>
+              <a 
+                href={`https://wa.me/${c.phone.replace(/\D/g, "")}`} 
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center w-full md:w-auto gap-2 rounded-full border border-green-500/30 bg-green-500/10 px-4 py-2 text-green-500 hover:bg-green-500/20 transition-all shadow-sm"
+              >
+                <WhatsAppIcon className="h-4 w-4 fill-green-500" />
+                <span className="font-display tracking-[0.1em] text-[10px] uppercase font-semibold">WhatsApp</span>
               </a>
             </div>
           </div>
         ))}
       </div>
+        <SectionNavButtons backId="countdown" />
       </div>
     </Section>
   );

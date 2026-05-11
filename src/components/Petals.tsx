@@ -1,6 +1,7 @@
 import { useMemo } from "react";
+import rosePetal from "@/assets/rose_petal.png";
 
-export function Petals({ count = 18, className = "fixed inset-0" }: { count?: number, className?: string }) {
+export function Petals({ count = 30, className = "fixed inset-0" }: { count?: number, className?: string }) {
   const petals = useMemo(
     () =>
       Array.from({ length: count }).map((_, i) => ({
@@ -8,7 +9,7 @@ export function Petals({ count = 18, className = "fixed inset-0" }: { count?: nu
         left: Math.random() * 100,
         delay: Math.random() * 12,
         duration: 10 + Math.random() * 12,
-        size: 12 + Math.random() * 18,
+        size: 30 + Math.random() * 40,
         rotate: Math.random() * 360,
       })),
     [count],
@@ -17,26 +18,22 @@ export function Petals({ count = 18, className = "fixed inset-0" }: { count?: nu
   return (
     <div className={`pointer-events-none z-10 overflow-hidden ${className}`}>
       {petals.map((p) => (
-        <svg
+        <img
           key={p.id}
-          viewBox="0 0 24 24"
-          width={p.size}
-          height={p.size}
+          src={rosePetal}
+          alt=""
           className="absolute"
           style={{
+            width: p.size,
+            height: "auto",
             left: `${p.left}%`,
-            top: "-10%",
+            top: "-15%",
             animation: `petal-fall ${p.duration}s linear ${p.delay}s infinite`,
             transform: `rotate(${p.rotate}deg)`,
+            mixBlendMode: 'screen',
+            filter: "drop-shadow(0 5px 10px rgba(0,0,0,0.1))",
           }}
-        >
-          <path
-            d="M12 2 C16 6 20 10 12 22 C4 10 8 6 12 2 Z"
-            fill="oklch(0.65 0.18 25)"
-            opacity="0.85"
-          />
-          <path d="M12 4 C13 10 13 16 12 20" stroke="oklch(0.78 0.14 80)" strokeWidth="0.4" fill="none" />
-        </svg>
+        />
       ))}
     </div>
   );
