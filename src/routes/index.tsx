@@ -12,7 +12,7 @@ import { Section } from "@/components/Section";
 import { SandeshPatr } from "@/components/SandeshPatr";
 import { Phone, MessageSquare, Send } from "lucide-react";
 
-import { GoldenParticles } from "@/components/Petals";
+import { Petals, GoldenParticles } from "@/components/Petals";
 import { RitualCard } from "@/components/RitualCard";
 import { WeddingBox } from "@/components/WeddingBox";
 
@@ -176,6 +176,7 @@ function Welcome() {
       {/* All sections */}
       {opened && (
         <div className="flex flex-col">
+          <Petals count={25} />
           <HomeSection guestName={guestName} revealed={revealed} setRevealed={setRevealed} />
           
           <AnimatePresence>
@@ -206,7 +207,7 @@ function Welcome() {
 function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, revealed: boolean, setRevealed: (v: boolean) => void }) {
   return (
     <Section id="home" accent="oklch(0.34 0.13 18)" className="min-h-screen flex items-center justify-center">
-      <div className="flex flex-col items-center text-center">
+      <div className="mx-auto flex max-w-md flex-col items-center text-center px-6">
         {/* Golden Om Symbol */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
@@ -338,25 +339,7 @@ function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, 
           <p className="mt-2 font-serif italic text-gold/80 text-lg">to grace our special day</p>
         </motion.div>
 
-        <motion.button
-          initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, delay: 1.5, type: "spring" }}
-          onClick={() => document.getElementById("rituals")?.scrollIntoView({ behavior: "smooth" })}
-          className="mt-12 inline-flex items-center gap-3 rounded-full border border-gold/60 bg-gradient-to-r from-gold/10 via-gold/20 to-gold/10 px-8 py-3 shadow-[0_0_30px_rgba(255,215,0,0.25)] backdrop-blur-sm hover:scale-105 transition-transform cursor-pointer"
-        >
-          <motion.span
-            animate={{ scale: [1, 1.3, 1] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-            className="text-xl"
-          >✦</motion.span>
-          <span className="font-display text-xs tracking-[0.5em] text-gold uppercase">Invitation is Open</span>
-          <motion.span
-            animate={{ scale: [1, 1.3, 1] }}
-            transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="text-xl"
-          >✦</motion.span>
-        </motion.button>
+
 
         <OrnateDivider />
 
@@ -383,12 +366,23 @@ function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, 
 
         {!revealed ? (
           <motion.button
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2, delay: 0.5, type: "spring" }}
             onClick={() => setRevealed(true)}
-            className="mt-12 rounded-full border-2 border-gold bg-gradient-to-r from-gold via-amber-200 to-gold px-12 py-4 font-display text-base font-bold tracking-[0.3em] text-maroon-deep shadow-[0_0_30px_rgba(255,215,0,0.4)] transition"
+            className="mt-12 inline-flex items-center gap-3 rounded-full border border-gold/60 bg-gradient-to-r from-gold/10 via-gold/20 to-gold/10 px-8 py-3 shadow-[0_0_30px_rgba(255,215,0,0.25)] backdrop-blur-sm hover:scale-105 transition-transform cursor-pointer"
           >
-            INVITATION IS OPEN
+            <motion.span
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+              className="text-xl"
+            >✦</motion.span>
+            <span className="font-display text-xs tracking-[0.5em] text-gold uppercase">Invitation is Open</span>
+            <motion.span
+              animate={{ scale: [1, 1.3, 1] }}
+              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+              className="text-xl"
+            >✦</motion.span>
           </motion.button>
         ) : (
           <div className="flex flex-col items-center gap-4">

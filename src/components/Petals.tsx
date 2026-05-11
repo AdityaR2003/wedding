@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import rosePetal from "@/assets/rose_petal.png";
+import fallingHeart from "@/assets/falling_heart.png";
 
 export function Petals({ count = 30, className = "fixed inset-0" }: { count?: number, className?: string }) {
   const petals = useMemo(
@@ -20,7 +20,7 @@ export function Petals({ count = 30, className = "fixed inset-0" }: { count?: nu
       {petals.map((p) => (
         <img
           key={p.id}
-          src={rosePetal}
+          src={fallingHeart}
           alt=""
           className="absolute"
           style={{
