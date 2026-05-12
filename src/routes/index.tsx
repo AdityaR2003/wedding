@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
 import { z } from "zod";
-import { Heart, MessageCircle, Coffee, Gem, Users, MapPin } from "lucide-react";
+import { Heart, MessageCircle, Coffee, Gem, Users, MapPin, Sparkles } from "lucide-react";
 import ganesha from "@/assets/ganesha.png";
 import pinkGanesha from "@/assets/pink_ganesha.png";
 import templeDoor from "@/assets/temple-door.jpg";
@@ -558,6 +558,19 @@ function WishingAndWellwingsSection({ guestName }: { guestName: string }) {
     { name: "Deepak & Ritu", text: "May your union be blessed with peace and harmony. Congratulations!" },
   ]);
 
+  const aiBlessings = [
+    "May your love be as timeless as the stars and as beautiful as a blooming rose. Congratulations to the royal couple! 🌹✨",
+    "Wishing Ravi & Ranjana a lifetime of joy, laughter, and endless blessings. May your sacred union be filled with magic! 🕊️💍",
+    "A match made in heaven! May your journey together be as grand as this celebration. Stay blessed always! 🎊🙏",
+    "Sending all my love to the most beautiful couple. May every day of your marriage be a new chapter of happiness! 🌸💖",
+    "May Lord Ganesha bless your new beginning with prosperity, peace, and eternal love. Happy Wedding! ॐ🔱"
+  ];
+
+  const generateAIWishes = () => {
+    const random = aiBlessings[Math.floor(Math.random() * aiBlessings.length)];
+    setMessage(random);
+  };
+
   const handleSend = () => {
     if (message.trim()) {
       const newBlessing = { name: name || "Anonymous Guest", text: message.trim() };
@@ -627,7 +640,15 @@ function WishingAndWellwingsSection({ guestName }: { guestName: string }) {
                     </label>
 
                     <label className="block">
+                    <div className="flex items-center justify-between">
                       <span className="font-display text-[9px] tracking-[0.2em] text-gold/80 uppercase">Your Message</span>
+                      <button 
+                        onClick={generateAIWishes}
+                        className="flex items-center gap-1.5 px-2 py-1 rounded-md border border-gold/30 bg-gold/5 text-[8px] font-display tracking-widest text-gold hover:bg-gold/15 transition-all animate-pulse"
+                      >
+                        <Sparkles className="h-2.5 w-2.5" /> AI SUGGESTION
+                      </button>
+                    </div>
                       <textarea
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
