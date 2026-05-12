@@ -65,22 +65,6 @@ export function RitualCard({ ritual, index }: RitualCardProps) {
         ctx.lineTo(i + canvas.height, canvas.height);
         ctx.stroke();
       }
-
-      /* Emoji */
-      ctx.font = "54px serif";
-      ctx.textAlign = "center";
-      ctx.fillText(ritual.emoji, canvas.width / 2, canvas.height / 2 - 18);
-
-      /* Label */
-      ctx.font = "bold 13px 'Cinzel', serif";
-      ctx.fillStyle = "rgba(255,255,255,0.90)";
-      ctx.shadowColor = "rgba(0,0,0,0.4)";
-      ctx.shadowBlur = 6;
-      ctx.fillText("SCRATCH TO REVEAL", canvas.width / 2, canvas.height / 2 + 22);
-      ctx.font = "10px 'Cinzel', serif";
-      ctx.fillStyle = "rgba(255,255,255,0.65)";
-      ctx.fillText(ritual.chapter, canvas.width / 2, canvas.height / 2 + 42);
-      ctx.shadowBlur = 0;
     };
 
     drawLayer();
@@ -165,15 +149,15 @@ export function RitualCard({ ritual, index }: RitualCardProps) {
       viewport={{ once: true, margin: "-60px" }}
       transition={{ duration: 0.6, delay: index * 0.1 }}
       /* Fixed uniform size — same for every card */
-      className="relative overflow-hidden rounded-3xl border border-gold/30 bg-maroon-deep/80 shadow-xl perspective-1000"
-      style={{ height: 420 }}
+      className="relative overflow-hidden rounded-3xl border border-gold/30 shadow-xl perspective-1000"
+      style={{ height: 420, willChange: "transform", background: revealed ? "oklch(0.18 0.10 18)" : "transparent" }}
     >
       <motion.div
         className="relative h-full w-full"
         initial={false}
         animate={{ rotateY: isFlipped ? 180 : 0 }}
         transition={{ duration: 0.8, ease: [0.4, 0, 0.2, 1] }}
-        style={{ transformStyle: "preserve-3d" }}
+        style={{ transformStyle: "preserve-3d", willChange: "transform" }}
       >
         {/* ── Front Side ── */}
         <div 
@@ -226,17 +210,20 @@ export function RitualCard({ ritual, index }: RitualCardProps) {
               ))}
             </div>
 
-            {/* View Moments Button */}
+            {/* View Moments Button - Logo only */}
             {curtainOpen && ritual.momentImg && (
               <motion.button
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                whileHover={{ scale: 1.2, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
                 onClick={() => setIsFlipped(true)}
-                className="mt-5 rounded-full border border-gold/60 bg-gold/10 px-6 py-2 font-display text-[10px] tracking-[0.2em] text-gold hover:bg-gold hover:text-maroon-deep transition"
+                className="mt-6 flex flex-col items-center gap-2 group"
               >
-                VIEW MOMENTS 📸
+                <div className="relative h-16 w-16 flex items-center justify-center rounded-full border border-gold/40 bg-gold/5 text-gold shadow-[0_0_20px_rgba(255,215,0,0.2)] transition-all group-hover:border-gold group-hover:bg-gold/10">
+                  <span className="text-3xl">📸</span>
+                </div>
+                <span className="font-display text-[8px] tracking-[0.3em] text-gold opacity-60 group-hover:opacity-100">VIEW MOMENTS</span>
               </motion.button>
             )}
           </div>
@@ -360,16 +347,24 @@ export function RitualCard({ ritual, index }: RitualCardProps) {
         />
       )}
 
-      {/* ── Scratch hint ── */}
+      {/* ── Scratch hint (Centered) ── */}
       {!revealed && (
         <motion.div
-          animate={{ opacity: [0.5, 1, 0.5] }}
+          animate={{ opacity: [0.6, 1, 0.6] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="absolute bottom-3 left-0 right-0 z-30 flex flex-col items-center gap-0.5 pointer-events-none"
+          style={{ willChange: "transform, opacity" }}
+          className="absolute top-1/2 left-0 right-0 z-30 -translate-y-1/2 flex flex-col items-center gap-4 pointer-events-none"
         >
-          <p className="font-display text-[7px] tracking-[0.45em] text-white/70 uppercase">
+          <p className="font-display text-[14px] tracking-[0.6em] text-white uppercase font-bold">
             Scratch to reveal
           </p>
+          <motion.p 
+            animate={{ scale: [0.98, 1.05, 0.98], opacity: [0.9, 1, 0.9] }}
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+            className="font-script text-6xl md:text-7xl text-gold-gradient"
+          >
+            {ritual.title}
+          </motion.p>
         </motion.div>
       )}
     </motion.div>

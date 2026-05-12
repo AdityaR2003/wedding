@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { z } from "zod";
 import { Heart, MessageCircle, Coffee, Gem, Users, MapPin } from "lucide-react";
 import ganesha from "@/assets/ganesha.png";
+import pinkGanesha from "@/assets/pink_ganesha.png";
 import templeDoor from "@/assets/temple-door.jpg";
 import templeGate from "@/assets/clean_temple_gate.png";
 import { Diya } from "@/components/Diya";
@@ -205,17 +206,19 @@ function Welcome() {
 
 /* ======================== HOME ======================== */
 function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, revealed: boolean, setRevealed: (v: boolean) => void }) {
+
+
   return (
-    <Section id="home" accent="oklch(0.34 0.13 18)" className="min-h-screen flex items-center justify-center">
-      <div className="mx-auto flex max-w-md flex-col items-center text-center px-6">
+    <Section id="home" accent="oklch(0.34 0.13 18)" className="min-h-screen flex items-center justify-center p-2 py-4 md:p-4">
+      <div className="mx-auto flex w-full max-w-md flex-col items-center text-center">
         {/* Golden Om Symbol */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="mb-2"
+          className="mb-1"
         >
-          <span className="font-deva text-7xl md:text-8xl text-gold-gradient drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]">
+          <span className="font-deva text-5xl md:text-8xl text-gold-gradient drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]">
             ॐ
           </span>
         </motion.div>
@@ -225,43 +228,34 @@ function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2 }}
-          className="mb-4 font-deva text-5xl text-gold-gradient drop-shadow-md md:text-6xl"
+          className="mb-3 font-deva text-3xl md:text-6xl text-gold-gradient drop-shadow-md text-balance"
         >
           शुभ विवाह
         </motion.h2>
 
-        <div className="flex w-full max-w-lg items-end justify-center gap-6 md:gap-12">
+        <div className="flex w-full items-end justify-center gap-4 md:gap-12 relative pb-4 md:pb-10">
           {/* Left Pillar */}
           <motion.div
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
             transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
             style={{ transformOrigin: "bottom" }}
-            className="flex flex-col items-center justify-end h-44 w-8 md:h-56 md:w-10"
+            className="flex flex-col items-center justify-end h-24 md:h-56 w-6 md:w-10 relative"
           >
-            {/* Capital */}
-            <div className="w-full h-3 rounded-t-sm bg-gradient-to-r from-amber-700 via-yellow-300 to-amber-800 shadow-md border-b border-amber-900/40" />
-            <div className="w-3/4 h-2 bg-gradient-to-r from-amber-600 via-yellow-200 to-amber-700 shadow-sm border-b border-amber-900/40" />
-            {/* Shaft */}
-            <div className="w-1/2 flex-1 bg-gradient-to-r from-amber-600 via-yellow-300 to-amber-700 shadow-[inset_0_0_8px_rgba(0,0,0,0.4)] flex flex-col justify-evenly items-center">
-               <div className="w-full h-px bg-amber-900/40" />
-               <div className="w-full h-px bg-amber-900/40" />
-               <div className="w-full h-px bg-amber-900/40" />
-               <div className="w-full h-px bg-amber-900/40" />
-            </div>
-            {/* Base */}
-            <div className="w-3/4 h-3 bg-gradient-to-r from-amber-700 via-yellow-300 to-amber-800 shadow-md border-t border-amber-900/40" />
-            <div className="w-full h-4 rounded-b-sm bg-gradient-to-r from-amber-600 via-yellow-200 to-amber-700 shadow-md" />
+            <div className="w-full h-2 rounded-t-sm bg-gradient-to-r from-amber-700 via-yellow-300 to-amber-800 shadow-md" />
+            <div className="w-1/2 flex-1 bg-gradient-to-r from-amber-600 via-yellow-300 to-amber-700" />
+            <div className="w-full h-2 bg-gradient-to-r from-amber-800 via-yellow-400 to-amber-900" />
           </motion.div>
 
-          <motion.img
-            initial={{ opacity: 0, scale: 0.6 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1.4, delay: 0.4 }}
-            src={ganesha}
-            alt="Lord Ganesha"
-            className="animate-pulse-glow z-10 h-[180px] w-auto md:h-[220px]"
-          />
+          <div className="flex flex-col items-center">
+            <motion.img 
+              src={ganesha} 
+              alt="Ganesha" 
+              className="h-24 md:h-44 w-auto drop-shadow-[0_0_20px_rgba(255,215,0,0.5)] mb-1"
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 3, repeat: Infinity }}
+            />
+          </div>
 
           {/* Right Pillar */}
           <motion.div
@@ -269,40 +263,60 @@ function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, 
             animate={{ scaleY: 1 }}
             transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
             style={{ transformOrigin: "bottom" }}
-            className="flex flex-col items-center justify-end h-44 w-8 md:h-56 md:w-10"
+            className="flex flex-col items-center justify-end h-24 md:h-56 w-6 md:w-10 relative"
           >
-            {/* Capital */}
-            <div className="w-full h-3 rounded-t-sm bg-gradient-to-r from-amber-700 via-yellow-300 to-amber-800 shadow-md border-b border-amber-900/40" />
-            <div className="w-3/4 h-2 bg-gradient-to-r from-amber-600 via-yellow-200 to-amber-700 shadow-sm border-b border-amber-900/40" />
-            {/* Shaft */}
-            <div className="w-1/2 flex-1 bg-gradient-to-r from-amber-600 via-yellow-300 to-amber-700 shadow-[inset_0_0_8px_rgba(0,0,0,0.4)] flex flex-col justify-evenly items-center">
-               <div className="w-full h-px bg-amber-900/40" />
-               <div className="w-full h-px bg-amber-900/40" />
-               <div className="w-full h-px bg-amber-900/40" />
-               <div className="w-full h-px bg-amber-900/40" />
-            </div>
-            {/* Base */}
-            <div className="w-3/4 h-3 bg-gradient-to-r from-amber-700 via-yellow-300 to-amber-800 shadow-md border-t border-amber-900/40" />
-            <div className="w-full h-4 rounded-b-sm bg-gradient-to-r from-amber-600 via-yellow-200 to-amber-700 shadow-md" />
+            <div className="w-full h-2 rounded-t-sm bg-gradient-to-r from-amber-700 via-yellow-300 to-amber-800 shadow-md" />
+            <div className="w-1/2 flex-1 bg-gradient-to-r from-amber-600 via-yellow-300 to-amber-700" />
+            <div className="w-full h-2 bg-gradient-to-r from-amber-800 via-yellow-400 to-amber-900" />
           </motion.div>
         </div>
-        <p className="mt-6 max-w-2xl font-deva text-lg leading-relaxed text-gold-gradient md:text-2xl">
+
+        <p className="mt-2 max-w-2xl font-deva text-sm md:text-2xl leading-relaxed text-gold-gradient">
           वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ।<br />
           निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥
         </p>
-        <p className="mt-8 font-display text-xs tracking-[0.5em] text-ivory/70">WITH THE BLESSINGS OF FAMILIES</p>
 
-        {/* Couple Name — Moved below blessings */}
+        <p className="mt-4 font-display text-[8px] md:text-[10px] tracking-[0.4em] text-ivory/60 uppercase">WITH THE BLESSINGS OF FAMILIES</p>
+
+        {/* Personalized Welcome */}
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.2, delay: 1 }}
+          className="mt-2 flex flex-col items-center"
+        >
+          <p className="font-serif italic text-gold/80 text-sm md:text-lg">We cordially invite</p>
+          <h2 className="mt-1 font-script text-3xl md:text-4xl text-maroon-deep bg-gradient-to-r from-gold via-yellow-200 to-gold bg-clip-text text-transparent px-4 py-1">
+            {guestName}
+          </h2>
+          <p className="mt-1 font-serif italic text-gold/80 text-sm md:text-lg">to grace our special day</p>
+        </motion.div>
+
+        <OrnateDivider className="my-2" />
+
+        {/* You are cordially invited */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.5, delay: 1.8 }}
+          className="mt-2 mb-2 text-center"
+        >
+          <p className="font-serif italic text-gold/90 text-lg md:text-2xl">
+            You are cordially invited to the wedding of
+          </p>
+        </motion.div>
+
+        {/* Couple Name */}
         <motion.div
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.4, delay: 0.3, type: "spring", bounce: 0.4 }}
-          className="mt-6 flex items-center justify-center gap-4"
+          transition={{ duration: 1.4, delay: 2, type: "spring", bounce: 0.4 }}
+          className="mb-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 px-4"
         >
           <motion.span
             animate={{ filter: ["drop-shadow(0 0 10px rgba(255,210,0,0.4))", "drop-shadow(0 0 28px rgba(255,210,0,0.85))", "drop-shadow(0 0 10px rgba(255,210,0,0.4))"] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
-            className="font-script text-5xl md:text-7xl"
+            className="font-script text-4xl md:text-7xl whitespace-nowrap"
             style={{ background: "linear-gradient(135deg, #ffd700, #ffe066, #b8860b, #ffd700)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
           >
             Ravi
@@ -310,58 +324,32 @@ function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, 
           <motion.span
             initial={{ opacity: 0, scale: 0 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8, delay: 0.8, type: "spring" }}
-            className="font-display text-2xl md:text-4xl text-gold/70"
+            transition={{ duration: 0.8, delay: 2.5, type: "spring" }}
+            className="font-display text-lg md:text-4xl text-gold/70"
           >
             &amp;
           </motion.span>
           <motion.span
             animate={{ filter: ["drop-shadow(0 0 10px rgba(255,210,0,0.4))", "drop-shadow(0 0 28px rgba(255,210,0,0.85))", "drop-shadow(0 0 10px rgba(255,210,0,0.4))"] }}
-            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1.5 }}
-            className="font-script text-5xl md:text-7xl"
+            transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: 3 }}
+            className="font-script text-4xl md:text-7xl whitespace-nowrap"
             style={{ background: "linear-gradient(135deg, #ffd700, #ffe066, #b8860b, #ffd700)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}
           >
             Ranjana
           </motion.span>
         </motion.div>
 
-        {/* Personalized Welcome */}
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 1 }}
-          className="mt-6 flex flex-col items-center"
-        >
-          <p className="font-serif italic text-gold/80 text-lg">We cordially invite</p>
-          <h2 className="mt-2 font-script text-4xl text-maroon-deep bg-gradient-to-r from-gold via-yellow-200 to-gold bg-clip-text text-transparent px-4 py-1">
-            {guestName}
-          </h2>
-          <p className="mt-2 font-serif italic text-gold/80 text-lg">to grace our special day</p>
-        </motion.div>
+        <OrnateDivider className="my-2" />
+        
+        <div className="flex flex-col gap-0">
+          <p className="font-display text-xs tracking-[0.3em] text-ivory/85 md:text-base">14 · JUNE · 2026</p>
+          <p className="font-serif italic text-ivory/70 text-sm">Gorakhpur, Uttar Pradesh</p>
+        </div>
 
-
-
-        <OrnateDivider />
-
-        {/* You are cordially invited */}
-        <motion.div
-          initial={{ opacity: 0, y: 15 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.5, delay: 1.8 }}
-          className="mt-8 mb-6 text-center"
-        >
-          <p className="font-serif italic text-gold/90 text-xl md:text-2xl">
-            You are cordially invited to the wedding of
-          </p>
-        </motion.div>
-        <OrnateDivider />
-        <p className="font-display text-sm tracking-[0.4em] text-ivory/85 md:text-base">14 · JUNE · 2026</p>
-        <p className="mt-1 font-serif italic text-ivory/70">Gorakhpur, Uttar Pradesh</p>
-
-        <div className="mt-10 flex items-end gap-10">
-          <Diya size={60} />
-          <Diya size={80} />
-          <Diya size={60} />
+        <div className="mt-4 flex items-end justify-center gap-6 md:gap-10">
+          <Diya size={40} className="md:w-[60px]" />
+          <Diya size={50} className="md:w-[80px]" />
+          <Diya size={40} className="md:w-[60px]" />
         </div>
 
         {!revealed ? (
@@ -370,25 +358,25 @@ function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, 
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 1.2, delay: 0.5, type: "spring" }}
             onClick={() => setRevealed(true)}
-            className="mt-12 inline-flex items-center gap-3 rounded-full border border-gold/60 bg-gradient-to-r from-gold/10 via-gold/20 to-gold/10 px-8 py-3 shadow-[0_0_30px_rgba(255,215,0,0.25)] backdrop-blur-sm hover:scale-105 transition-transform cursor-pointer"
+            className="mt-6 inline-flex items-center gap-3 rounded-full border border-gold/60 bg-gradient-to-r from-gold/10 via-gold/20 to-gold/10 px-6 py-2 shadow-[0_0_30px_rgba(255,215,0,0.25)] backdrop-blur-sm hover:scale-105 transition-transform cursor-pointer"
           >
             <motion.span
               animate={{ scale: [1, 1.3, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="text-xl"
+              className="text-lg"
             >✦</motion.span>
-            <span className="font-display text-xs tracking-[0.5em] text-gold uppercase">Invitation is Open</span>
+            <span className="font-display text-[10px] tracking-[0.4em] text-gold uppercase">Invitation is Open</span>
             <motion.span
               animate={{ scale: [1, 1.3, 1] }}
               transition={{ duration: 2, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-              className="text-xl"
+              className="text-lg"
             >✦</motion.span>
           </motion.button>
         ) : (
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-2">
             <button
               onClick={() => document.getElementById("story")?.scrollIntoView({ behavior: "smooth" })}
-              className="mt-12 rounded-full border border-gold bg-gradient-to-r from-[oklch(0.78_0.14_80)] to-[oklch(0.65_0.13_60)] px-10 py-3 font-display text-sm tracking-[0.3em] text-maroon-deep shadow-[0_10px_40px_-10px_oklch(0.78_0.14_80)] transition hover:scale-105"
+              className="mt-6 rounded-full border border-gold bg-gradient-to-r from-[oklch(0.78_0.14_80)] to-[oklch(0.65_0.13_60)] px-8 py-2 font-display text-xs tracking-[0.2em] text-maroon-deep shadow-[0_10px_30px_-10px_oklch(0.78_0.14_80)] transition hover:scale-105"
             >
               BEGIN OUR STORY ↓
             </button>
@@ -415,8 +403,8 @@ function StorySection() {
 
         <h2 className="mt-2 text-center font-script text-6xl text-gold-gradient md:text-7xl">Journey of Love</h2>
         <OrnateDivider />
-        <div className="relative mt-12">
-          <div className="absolute left-6 top-0 h-full w-px bg-gradient-to-b from-gold via-gold/40 to-transparent md:left-1/2" />
+        <div className="relative mt-12 px-4 md:px-0">
+          <div className="absolute left-8 top-0 h-full w-px bg-gradient-to-b from-gold via-gold/40 to-transparent md:left-1/2" />
           {moments.map((m, i) => (
             <motion.div
               key={m.title}
@@ -424,14 +412,14 @@ function StorySection() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-80px" }}
               transition={{ duration: 0.7, delay: i * 0.05 }}
-              className={`relative mb-12 flex flex-col gap-6 md:flex-row md:items-center ${i % 2 ? "md:flex-row-reverse" : ""}`}
+              className={`relative mb-16 flex flex-col gap-6 md:flex-row md:items-center ${i % 2 ? "md:flex-row-reverse" : ""}`}
             >
-              <div className="absolute left-6 z-10 -translate-x-1/2 md:left-1/2">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-gold bg-maroon-deep text-gold glow-gold">
+              <div className="absolute left-8 z-10 -translate-x-1/2 md:left-1/2">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-gold bg-maroon-deep text-gold shadow-[0_0_15px_rgba(255,215,0,0.3)]">
                   <m.icon className="h-5 w-5" />
                 </div>
               </div>
-              <div className="ml-16 w-full md:ml-0 md:w-1/2 md:px-10" id={`moment-${i}`}>
+              <div className="ml-14 w-[calc(100%-3.5rem)] md:ml-0 md:w-1/2 md:px-10">
                 <div className="group overflow-hidden rounded-2xl border border-gold/40 bg-maroon-deep/60 backdrop-blur-sm transition-all hover:border-gold hover:shadow-[0_0_30px_rgba(255,215,0,0.2)]">
                   {m.img && (
                     <div className="h-48 w-full overflow-hidden border-b border-gold/20">
@@ -570,7 +558,7 @@ function FamilySection({ guestName }: { guestName: string }) {
           <p className="mx-auto mt-2 max-w-xl text-center font-serif italic text-ivory/80">Two families, joined by love, blessed by tradition.</p>
           
           <SandeshPatr guestName={guestName} className="mt-12">
-            <div className="grid gap-10 md:grid-cols-2">
+            <div className="grid gap-8 grid-cols-1 md:grid-cols-2 px-2">
               {families.map((f, i) => (
                 <motion.div
                   key={f.title}
@@ -578,19 +566,19 @@ function FamilySection({ guestName }: { guestName: string }) {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ duration: 0.8, delay: i * 0.15 }}
-                  className="rounded-xl border border-gold/40 bg-black/40 p-5 backdrop-blur-md shadow-sm transition-all hover:border-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.2)]"
+                  className="flex flex-col h-full rounded-xl border border-gold/40 bg-black/40 p-6 backdrop-blur-md shadow-sm transition-all hover:border-gold"
                 >
-                  <p className="font-display text-xs tracking-[0.4em] text-gold/80">{f.title}</p>
+                  <p className="font-display text-[10px] tracking-[0.4em] text-gold/80 uppercase">{f.title}</p>
                   <h3 className="mt-2 font-script text-4xl text-ivory">{f.name}</h3>
-                  <div className="mt-6 space-y-4">
+                  <div className="mt-6 flex flex-col flex-1 space-y-4">
                     {f.members.map((m) => (
-                      <div key={m.name} className="flex items-center gap-4 rounded-lg border border-gold/20 bg-black/30 p-3 transition-all hover:border-gold/50">
-                        <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-full border-2 border-gold/40 shadow-md">
+                      <div key={m.name} className="flex items-center gap-4 rounded-lg border border-gold/15 bg-black/30 p-3 hover:border-gold/30 transition-all">
+                        <div className="h-16 w-16 md:h-20 md:w-20 flex-shrink-0 overflow-hidden rounded-full border border-gold/40">
                           <img src={m.img} alt={m.name} className="h-full w-full object-cover" />
                         </div>
-                        <div>
-                          <p className="font-display text-[9px] tracking-[0.3em] text-gold/60 uppercase">{m.role}</p>
-                          <p className="font-serif text-lg leading-tight text-ivory/90">{m.name}</p>
+                        <div className="flex-1">
+                          <p className="font-display text-[8px] tracking-[0.3em] text-gold/60 uppercase">{m.role}</p>
+                          <p className="font-serif text-base md:text-lg leading-tight text-ivory/90">{m.name}</p>
                         </div>
                       </div>
                     ))}
@@ -708,11 +696,11 @@ function WishingAndWellwingsSection({ guestName }: { guestName: string }) {
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         rows={4}
-                        maxLength={500}
-                        placeholder="Share your heartfelt wishes..."
+                        maxLength={250}
+                        placeholder="Share your heartfelt wishes with emojis... 🌸✨"
                         className="mt-1.5 w-full resize-none rounded-lg border border-gold/30 bg-black/20 p-3 font-serif text-ivory placeholder:text-ivory/40 focus:border-gold/60 focus:outline-none text-sm"
                       />
-                      <p className="mt-1 text-right font-display text-[8px] text-ivory/50">{message.length}/500</p>
+                      <p className="mt-1 text-right font-display text-[8px] text-ivory/50">{message.length}/250</p>
                     </label>
 
                     <div className="flex flex-col gap-3">
@@ -911,19 +899,44 @@ function CountdownSection() {
   ];
   return (
     <Section id="countdown" accent="oklch(0.34 0.13 18)">
-      <div className="mx-auto max-w-3xl text-center">
-        <p className="font-display text-xs tracking-[0.5em] text-gold/80">UNTIL FOREVER</p>
-        <h2 className="mt-2 font-script text-6xl text-gold-gradient md:text-7xl">The Countdown</h2>
+      <div className="mx-auto max-w-4xl text-center">
+        {/* One-line Header */}
+        <div className="flex flex-col items-center justify-center gap-1 md:flex-row md:gap-4 mb-4">
+          <p className="font-display text-[8px] md:text-[10px] tracking-[0.4em] text-gold/60 uppercase">Until Forever</p>
+          <div className="hidden md:block h-px w-8 bg-gold/30" />
+          <h2 className="font-script text-4xl md:text-5xl text-gold-gradient">The Countdown</h2>
+        </div>
+        
         <OrnateDivider />
-        <div className="mt-10 grid grid-cols-2 gap-4 md:grid-cols-4">
+        
+        {/* Mobile-friendly 4-column grid */}
+        <div className="mt-8 grid grid-cols-4 gap-2 md:gap-6 px-2">
           {cells.map((c) => (
-            <div key={c.l} className="ornate-frame rounded-2xl bg-maroon-deep/80 p-6 backdrop-blur">
-              <div className="font-display text-5xl text-gold-gradient md:text-7xl tabular-nums">{String(c.v).padStart(2, "0")}</div>
-              <p className="mt-2 font-display text-[10px] tracking-[0.4em] text-ivory/70">{c.l.toUpperCase()}</p>
+            <div 
+              key={c.l} 
+              className="relative group rounded-xl border border-gold/30 bg-black/40 p-3 md:p-6 backdrop-blur-sm shadow-lg overflow-hidden transition-all hover:border-gold/60 hover:shadow-[0_0_20px_rgba(255,215,0,0.15)]"
+            >
+              {/* Inner Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-br from-gold/5 to-transparent opacity-50" />
+              
+              <div className="relative z-10">
+                <div className="font-display text-2xl md:text-5xl text-gold-gradient tabular-nums drop-shadow-sm">
+                  {String(c.v).padStart(2, "0")}
+                </div>
+                <p className="mt-1 font-display text-[6px] md:text-[10px] tracking-[0.2em] text-ivory/60 uppercase">
+                  {c.l}
+                </p>
+              </div>
+              
+              {/* Decorative Corner */}
+              <div className="absolute top-0 right-0 w-4 h-4 border-t border-r border-gold/20 rounded-tr-xl" />
             </div>
           ))}
         </div>
-        <p className="mt-10 font-serif italic text-ivory/85">Counting every breath until 14 · June · 2026</p>
+        
+        <p className="mt-10 font-serif italic text-ivory/60 text-sm md:text-base">
+          Counting every breath until <span className="text-gold/80 not-italic font-display text-xs tracking-widest ml-1">14 · June · 2026</span>
+        </p>
         <SectionNavButtons backId="accept" nextId="contact" />
       </div>
     </Section>
@@ -1071,12 +1084,14 @@ function GetInTouchSection() {
         <p className="font-display text-[10px] tracking-[0.5em] text-maroon/60 uppercase">GET IN TOUCH</p>
         <h3 className="mt-2 font-script text-6xl text-maroon-deep md:text-7xl">Contact Us</h3>
         <OrnateDivider />
-        <div className="mt-10 grid gap-6 md:grid-cols-2 md:px-20 text-center">
+        <div className="mt-10 grid gap-6 grid-cols-1 sm:grid-cols-2 px-4">
         {contacts.map((c) => (
-          <div key={c.name} className="flex flex-col items-center rounded-xl border border-gold/40 bg-black/40 p-5 backdrop-blur-md shadow-sm transition-all hover:border-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.2)]">
-            <p className="font-display text-[9px] tracking-[0.3em] text-gold/80 uppercase">{c.role}</p>
-            <p className="mt-1 font-serif text-xl text-ivory">{c.name}</p>
-            <div className="mt-4 flex flex-col md:flex-row items-center gap-3">
+          <div key={c.name} className="flex flex-col items-center justify-between rounded-xl border border-gold/40 bg-black/40 p-6 backdrop-blur-md shadow-sm transition-all hover:border-gold">
+            <div className="text-center">
+              <p className="font-display text-[9px] tracking-[0.3em] text-gold/80 uppercase">{c.role}</p>
+              <p className="mt-1 font-serif text-xl text-ivory">{c.name}</p>
+            </div>
+            <div className="mt-6 flex flex-col gap-3 w-full">
               <a 
                 href={`tel:${c.phone.replace(/\D/g, "")}`} 
                 className="flex items-center justify-center w-full md:w-auto gap-2 rounded-full border border-gold/40 bg-gold/10 px-4 py-2 text-gold hover:bg-gold/20 transition-all shadow-sm"

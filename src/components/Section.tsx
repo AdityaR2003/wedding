@@ -15,7 +15,7 @@ export function Section({
   return (
     <section
       id={id}
-      className={`relative w-full px-6 py-24 md:py-32 ${className}`}
+      className={`relative w-full px-4 py-16 md:px-8 md:py-32 ${className}`}
       style={{
         background: `radial-gradient(ellipse at top, ${accent} 0%, oklch(0.16 0.07 22) 70%, oklch(0.10 0.05 20) 100%)`,
       }}

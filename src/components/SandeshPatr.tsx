@@ -9,7 +9,7 @@ interface SandeshPatrProps {
 
 export function SandeshPatr({ children, guestName, className = "" }: SandeshPatrProps) {
   return (
-    <div className={`relative mx-auto max-w-2xl w-full px-2 py-12 md:px-4 ${className}`}>
+    <div className={`relative mx-auto max-w-2xl w-full px-4 py-12 md:px-4 ${className}`}>
       {/* Floral Mandala Decorations */}
       <div className="absolute -left-4 -top-4 z-30 h-16 w-16 opacity-30 md:h-24 md:w-24">
         <FloralMotif />

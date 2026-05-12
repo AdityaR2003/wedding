@@ -30,7 +30,6 @@ export function Petals({ count = 30, className = "fixed inset-0" }: { count?: nu
             top: "-15%",
             animation: `petal-fall ${p.duration}s linear ${p.delay}s infinite`,
             transform: `rotate(${p.rotate}deg)`,
-            filter: "drop-shadow(0 0 5px rgba(255, 215, 0, 0.4))",
           }}
         >
           <defs>

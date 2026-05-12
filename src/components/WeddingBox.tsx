@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import ganesha from "@/assets/ganesha.png";
+import pinkGanesha from "@/assets/pink_ganesha.png";
 
 interface WeddingBoxProps {
   guestName: string;
@@ -88,9 +88,14 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
                 </motion.div>
 
                 <motion.img 
-                  src={ganesha} 
+                  src={pinkGanesha} 
                   alt="Ganesha" 
-                  className="h-28 w-auto drop-shadow-[0_0_15px_rgba(255,215,0,0.5)]"
+                  className="h-28 w-auto drop-shadow-[0_0_15px_rgba(255,182,193,0.5)]"
+                  style={{ 
+                    mixBlendMode: 'lighten',
+                    maskImage: 'radial-gradient(circle at center, black 60%, transparent 95%)',
+                    WebkitMaskImage: 'radial-gradient(circle at center, black 60%, transparent 95%)'
+                  }}
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 3, repeat: Infinity }}
                 />
@@ -130,23 +135,7 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
               </motion.div>
             </div>
 
-            {/* Pull Bow on Top */}
-            <motion.div 
-              className="absolute -top-8 left-1/2 -translate-x-1/2 z-10"
-              whileHover={{ scale: 1.1 }}
-              animate={isOpening ? { y: -100, opacity: 0 } : {}}
-            >
-              <div className="relative h-20 w-24">
-                {/* Bow Loops */}
-                <div className="absolute top-0 left-0 w-12 h-16 bg-gold rounded-full rotate-[-30deg] border-2 border-amber-600 shadow-xl" />
-                <div className="absolute top-0 right-0 w-12 h-16 bg-gold rounded-full rotate-[30deg] border-2 border-amber-600 shadow-xl" />
-                {/* Bow Center */}
-                <div className="absolute top-6 left-1/2 -translate-x-1/2 w-8 h-8 bg-amber-600 rounded-full border-2 border-gold z-10 shadow-lg" />
-                {/* Ribbons hanging */}
-                <div className="absolute top-12 left-4 w-6 h-16 bg-gold rounded-b-lg rotate-[-15deg] border-x-2 border-b-2 border-amber-600 shadow-lg" />
-                <div className="absolute top-12 right-4 w-6 h-16 bg-gold rounded-b-lg rotate-[15deg] border-x-2 border-b-2 border-amber-600 shadow-lg" />
-              </div>
-            </motion.div>
+
           </motion.div>
         )}
       </AnimatePresence>
