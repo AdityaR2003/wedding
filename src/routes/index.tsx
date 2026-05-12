@@ -96,83 +96,19 @@ function Welcome() {
   const [opened, setOpened] = useState(false);
   const [revealed, setRevealed] = useState(false);
 
-  const [boxOpened, setBoxOpened] = useState(false);
   const { guest } = Route.useSearch();
   const guestName = guest || "Rohit Sharma";
 
   return (
     <div className="relative min-h-screen w-full overflow-x-hidden bg-[#1a0505]">
-
       <GoldenParticles count={30} />
       
-      {!boxOpened && (
+      {!opened && (
         <WeddingBox 
           guestName={guestName} 
-          onOpen={() => setBoxOpened(true)} 
+          onOpen={() => setOpened(true)} 
         />
       )}
-
-
-
-
-
-      {/* Door overlay */}
-      <AnimatePresence>
-        {boxOpened && !opened && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden">
-            {/* Left Door */}
-            <motion.div
-              key="left"
-              initial={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ duration: 2.2, ease: [0.7, 0, 0.3, 1] }}
-              onClick={() => setOpened(true)}
-              className="relative h-full w-1/2 cursor-pointer border-r border-gold/30"
-              style={{
-                backgroundImage: `url(${templeGate})`,
-                backgroundSize: "cover",
-                backgroundPosition: "right",
-              }}
-            >
-              <div className="absolute inset-0 bg-maroon-deep/20 shadow-[inset_-20px_0_60px_rgba(0,0,0,0.5)]" />
-              {/* Ornate Handle Left */}
-              <div className="absolute top-1/2 right-4 -translate-y-1/2 h-20 w-8 bg-gradient-to-r from-gold/80 to-gold rounded-l-full border border-gold/40 shadow-xl" />
-            </motion.div>
-
-            {/* Right Door */}
-            <motion.div
-              key="right"
-              initial={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ duration: 2.2, ease: [0.7, 0, 0.3, 1] }}
-              onClick={() => setOpened(true)}
-              className="relative h-full w-1/2 cursor-pointer border-l border-gold/30"
-              style={{
-                backgroundImage: `url(${templeGate})`,
-                backgroundSize: "cover",
-                backgroundPosition: "left",
-                transform: "scaleX(-1)",
-              }}
-            >
-              <div className="absolute inset-0 bg-maroon-deep/20 shadow-[inset_-20px_0_60px_rgba(0,0,0,0.5)]" />
-              {/* Ornate Handle Right */}
-              <div className="absolute top-1/2 left-4 -translate-y-1/2 h-20 w-8 bg-gradient-to-r from-gold/80 to-gold rounded-l-full border border-gold/40 shadow-xl" />
-            </motion.div>
-
-            <div className="pointer-events-none fixed inset-0 z-[60] flex items-center justify-center">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.6, duration: 1 }}
-                className="text-center bg-maroon-deep/40 backdrop-blur-sm p-8 rounded-full border border-gold/20"
-              >
-                <p className="font-script text-3xl text-gold-gradient md:text-5xl">Tap to Open the Doors</p>
-                <p className="mt-2 font-display text-[10px] tracking-[0.5em] text-ivory/80">WELCOME TO THE SACRED UNION</p>
-              </motion.div>
-            </div>
-          </div>
-        )}
-      </AnimatePresence>
 
       {/* All sections */}
       {opened && (
@@ -209,16 +145,16 @@ function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, 
 
 
   return (
-    <Section id="home" accent="oklch(0.34 0.13 18)" className="min-h-screen flex items-center justify-center p-2 py-4 md:p-4">
-      <div className="mx-auto flex w-full max-w-md flex-col items-center text-center">
+    <Section id="home" accent="oklch(0.34 0.13 18)" className="min-h-screen flex items-center justify-center p-2 py-4 md:p-8">
+      <div className="mx-auto flex w-full max-w-md md:max-w-2xl flex-col items-center text-center">
         {/* Golden Om Symbol */}
         <motion.div
           initial={{ opacity: 0, scale: 0.5 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.5, ease: "easeOut" }}
-          className="mb-1"
+          className="mb-1 md:mb-4"
         >
-          <span className="font-deva text-5xl md:text-8xl text-gold-gradient drop-shadow-[0_0_15px_rgba(255,215,0,0.4)]">
+          <span className="font-deva text-5xl md:text-9xl text-gold-gradient drop-shadow-[0_0_20px_rgba(255,215,0,0.5)]">
             ॐ
           </span>
         </motion.div>
@@ -228,30 +164,30 @@ function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2 }}
-          className="mb-3 font-deva text-3xl md:text-6xl text-gold-gradient drop-shadow-md text-balance"
+          className="mb-3 md:mb-8 font-deva text-3xl md:text-7xl text-gold-gradient drop-shadow-lg text-balance"
         >
           शुभ विवाह
         </motion.h2>
 
-        <div className="flex w-full items-end justify-center gap-4 md:gap-12 relative pb-4 md:pb-10">
+        <div className="flex w-full items-end justify-center gap-4 md:gap-20 relative pb-4 md:pb-14">
           {/* Left Pillar */}
           <motion.div
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
             transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
             style={{ transformOrigin: "bottom" }}
-            className="flex flex-col items-center justify-end h-24 md:h-56 w-6 md:w-10 relative"
+            className="flex flex-col items-center justify-end h-24 md:h-72 w-6 md:w-12 relative"
           >
-            <div className="w-full h-2 rounded-t-sm bg-gradient-to-r from-amber-700 via-yellow-300 to-amber-800 shadow-md" />
-            <div className="w-1/2 flex-1 bg-gradient-to-r from-amber-600 via-yellow-300 to-amber-700" />
-            <div className="w-full h-2 bg-gradient-to-r from-amber-800 via-yellow-400 to-amber-900" />
+            <div className="w-full h-2 md:h-4 rounded-t-sm bg-gradient-to-r from-amber-700 via-yellow-300 to-amber-800 shadow-md" />
+            <div className="w-1/2 flex-1 bg-gradient-to-r from-amber-600 via-yellow-300 to-amber-700 shadow-inner" />
+            <div className="w-full h-2 md:h-4 bg-gradient-to-r from-amber-800 via-yellow-400 to-amber-900" />
           </motion.div>
 
           <div className="flex flex-col items-center">
             <motion.img 
               src={ganesha} 
               alt="Ganesha" 
-              className="h-24 md:h-44 w-auto drop-shadow-[0_0_20px_rgba(255,215,0,0.5)] mb-1"
+              className="h-24 md:h-64 w-auto drop-shadow-[0_0_30px_rgba(255,215,0,0.6)] mb-1 md:mb-4"
               animate={{ scale: [1, 1.05, 1] }}
               transition={{ duration: 3, repeat: Infinity }}
             />
@@ -263,45 +199,45 @@ function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, 
             animate={{ scaleY: 1 }}
             transition={{ duration: 1.5, ease: "easeOut", delay: 0.2 }}
             style={{ transformOrigin: "bottom" }}
-            className="flex flex-col items-center justify-end h-24 md:h-56 w-6 md:w-10 relative"
+            className="flex flex-col items-center justify-end h-24 md:h-72 w-6 md:w-12 relative"
           >
-            <div className="w-full h-2 rounded-t-sm bg-gradient-to-r from-amber-700 via-yellow-300 to-amber-800 shadow-md" />
-            <div className="w-1/2 flex-1 bg-gradient-to-r from-amber-600 via-yellow-300 to-amber-700" />
-            <div className="w-full h-2 bg-gradient-to-r from-amber-800 via-yellow-400 to-amber-900" />
+            <div className="w-full h-2 md:h-4 rounded-t-sm bg-gradient-to-r from-amber-700 via-yellow-300 to-amber-800 shadow-md" />
+            <div className="w-1/2 flex-1 bg-gradient-to-r from-amber-600 via-yellow-300 to-amber-700 shadow-inner" />
+            <div className="w-full h-2 md:h-4 bg-gradient-to-r from-amber-800 via-yellow-400 to-amber-900" />
           </motion.div>
         </div>
 
-        <p className="mt-2 max-w-2xl font-deva text-sm md:text-2xl leading-relaxed text-gold-gradient">
+        <p className="mt-2 md:mt-8 max-w-3xl font-deva text-sm md:text-3xl leading-relaxed text-gold-gradient">
           वक्रतुण्ड महाकाय सूर्यकोटि समप्रभ ।<br />
           निर्विघ्नं कुरु मे देव सर्वकार्येषु सर्वदा ॥
         </p>
 
-        <p className="mt-4 font-display text-[8px] md:text-[10px] tracking-[0.4em] text-ivory/60 uppercase">WITH THE BLESSINGS OF FAMILIES</p>
+        <p className="mt-4 md:mt-10 font-display text-[8px] md:text-xs tracking-[0.4em] md:tracking-[0.6em] text-ivory/60 uppercase">WITH THE BLESSINGS OF FAMILIES</p>
 
         {/* Personalized Welcome */}
         <motion.div
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.2, delay: 1 }}
-          className="mt-2 flex flex-col items-center"
+          className="mt-2 md:mt-10 flex flex-col items-center"
         >
-          <p className="font-serif italic text-gold/80 text-sm md:text-lg">We cordially invite</p>
-          <h2 className="mt-1 font-script text-3xl md:text-4xl text-maroon-deep bg-gradient-to-r from-gold via-yellow-200 to-gold bg-clip-text text-transparent px-4 py-1">
+          <p className="font-serif italic text-gold/80 text-sm md:text-xl">We cordially invite</p>
+          <h2 className="mt-1 md:mt-4 font-script text-3xl md:text-6xl text-maroon-deep bg-gradient-to-r from-gold via-yellow-200 to-gold bg-clip-text text-transparent px-4 py-1">
             {guestName}
           </h2>
-          <p className="mt-1 font-serif italic text-gold/80 text-sm md:text-lg">to grace our special day</p>
+          <p className="mt-1 md:mt-4 font-serif italic text-gold/80 text-sm md:text-xl">to grace our special day</p>
         </motion.div>
 
-        <OrnateDivider className="my-2" />
+        <OrnateDivider className="my-2 md:my-10" />
 
         {/* You are cordially invited */}
         <motion.div
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1.5, delay: 1.8 }}
-          className="mt-2 mb-2 text-center"
+          className="mt-2 md:mt-10 mb-2 md:mb-6 text-center"
         >
-          <p className="font-serif italic text-gold/90 text-lg md:text-2xl">
+          <p className="font-serif italic text-gold/90 text-lg md:text-3xl">
             You are cordially invited to the wedding of
           </p>
         </motion.div>
@@ -311,7 +247,7 @@ function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, 
           initial={{ opacity: 0, scale: 0.85 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1.4, delay: 2, type: "spring", bounce: 0.4 }}
-          className="mb-2 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 px-4"
+          className="mb-2 md:mb-10 flex flex-wrap items-center justify-center gap-x-4 gap-y-1 md:gap-x-12 px-4"
         >
           <motion.span
             animate={{ filter: ["drop-shadow(0 0 10px rgba(255,210,0,0.4))", "drop-shadow(0 0 28px rgba(255,210,0,0.85))", "drop-shadow(0 0 10px rgba(255,210,0,0.4))"] }}
@@ -422,7 +358,7 @@ function StorySection() {
               <div className="ml-14 w-[calc(100%-3.5rem)] md:ml-0 md:w-1/2 md:px-10">
                 <div className="group overflow-hidden rounded-2xl border border-gold/40 bg-maroon-deep/60 backdrop-blur-sm transition-all hover:border-gold hover:shadow-[0_0_30px_rgba(255,215,0,0.2)]">
                   {m.img && (
-                    <div className="h-48 w-full overflow-hidden border-b border-gold/20">
+                    <div className="h-48 md:h-64 w-full overflow-hidden border-b border-gold/20">
                       <motion.img 
                         whileHover={{ scale: 1.05 }}
                         transition={{ duration: 0.5 }}
@@ -432,10 +368,10 @@ function StorySection() {
                       />
                     </div>
                   )}
-                  <div className="p-6">
-                    <p className="font-display text-xs tracking-[0.3em] text-gold/80">{m.date}</p>
-                    <h3 className="mt-2 font-script text-3xl text-ivory">{m.title}</h3>
-                    <p className="mt-3 font-serif text-ivory/85 leading-relaxed">{m.text}</p>
+                  <div className="p-6 md:p-10">
+                    <p className="font-display text-xs md:text-sm tracking-[0.3em] text-gold/80">{m.date}</p>
+                    <h3 className="mt-2 font-script text-3xl md:text-5xl text-ivory">{m.title}</h3>
+                    <p className="mt-3 font-serif text-ivory/85 text-base md:text-xl leading-relaxed">{m.text}</p>
                     
                     {/* Inner moment navigation */}
                     <div className="mt-6 flex justify-between gap-4">
@@ -972,98 +908,85 @@ function AcceptInvitationSection({ guestName }: { guestName: string }) {
   }
 
   return (
-    <>
-      <AnimatePresence>
-        {accepted && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[200] flex items-center justify-center"
-            style={{ background: "rgba(0,0,0,0.88)" }}
-            onClick={() => setAccepted(false)}
-          >
-            {/* Confetti burst */}
-            <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
-              {particles.map((p) => (
-                <motion.div
-                  key={p.id}
-                  initial={{ x: 0, y: 0, scale: 0, rotate: 0, opacity: 1 }}
-                  animate={{ x: p.tx, y: p.ty, scale: [0, 1.4, 0.6, 0], rotate: p.rotate, opacity: [1, 1, 0.6, 0] }}
-                  transition={{ duration: 2.2, ease: "easeOut", delay: p.delay }}
-                  className="absolute rounded-sm"
-                  style={{ width: p.w, height: p.h, backgroundColor: p.color, boxShadow: `0 0 ${p.w}px ${p.color}` }}
-                />
-              ))}
-            </div>
+    <Section id="accept" accent="oklch(0.30 0.13 18)">
+      <div className="mx-auto max-w-2xl text-center">
+        <p className="font-display text-xs tracking-[0.5em] text-gold/80">YOU ARE INVITED</p>
+        <h2 className="mt-2 font-script text-6xl text-gold-gradient md:text-7xl">Join Us</h2>
+        <OrnateDivider />
 
-            {/* Celebration card */}
-            <motion.div
-              initial={{ scale: 0, rotate: -12, opacity: 0 }}
-              animate={{ scale: 1, rotate: 0, opacity: 1 }}
-              exit={{ scale: 0.8, opacity: 0 }}
-              transition={{ type: "spring", duration: 0.8, bounce: 0.45, delay: 0.15 }}
-              className="relative z-10 mx-4 w-full max-w-md rounded-3xl border-2 border-gold p-10 text-center shadow-[0_0_100px_rgba(255,215,0,0.45)]"
-              style={{ background: "linear-gradient(135deg,oklch(0.18 0.10 18),oklch(0.28 0.13 18))" }}
-              onClick={(e) => e.stopPropagation()}
-            >
-              <motion.div animate={{ rotate: [0,-12,12,-6,6,0] }} transition={{ delay: 0.5, duration: 0.9 }} className="text-7xl">🎊</motion.div>
-              <motion.div initial={{ opacity:0,y:25 }} animate={{ opacity:1,y:0 }} transition={{ delay:0.4 }}>
-                <motion.h2 
-                  animate={{ scale: [1, 1.05, 1], filter: ["drop-shadow(0 0 10px rgba(255,215,0,0.2))", "drop-shadow(0 0 25px rgba(255,215,0,0.6))", "drop-shadow(0 0 10px rgba(255,215,0,0.2))"] }}
-                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                  className="mt-5 font-script text-5xl text-gold-gradient"
-                >
-                  Thank You, {guestName}!
-                </motion.h2>
-              </motion.div>
-              <motion.p initial={{ opacity:0,y:18 }} animate={{ opacity:1,y:0 }} transition={{ delay:0.6 }} className="mt-2 font-serif italic text-2xl text-ivory/80">Your presence means the world to us.</motion.p>
-              <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.85 }}>
-                <p className="mt-6 font-serif text-lg leading-relaxed text-ivory/95">
-                  Ravi &amp; Ranjana are overjoyed to celebrate this special day with you. We can't wait! 🌸
+        <div className="mt-8 relative min-h-[400px] flex items-center justify-center">
+          <AnimatePresence mode="wait">
+            {!accepted ? (
+              <motion.div
+                key="join-us-card"
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.05 }}
+                transition={{ duration: 0.5 }}
+                className="w-full rounded-xl border border-gold/40 bg-black/40 p-6 backdrop-blur-md shadow-2xl transition-all hover:border-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.2)]"
+              >
+                <p className="font-script text-3xl text-gold/90">Dear {guestName},</p>
+                <p className="mt-5 font-serif text-xl leading-relaxed text-ivory/90 md:text-2xl">
+                  Will you join us on our <span className="text-gold font-semibold">special day</span>?
                 </p>
-                <div className="mt-6 flex justify-center gap-3">
-                  <Diya size={35} /><Diya size={50} /><Diya size={35} />
-                </div>
-                <button onClick={() => setAccepted(false)} className="mt-6 rounded-full border border-gold/50 bg-gold/10 px-8 py-2.5 font-display text-xs tracking-[0.3em] text-gold hover:bg-gold hover:text-maroon-deep transition">
-                  CLOSE ✕
-                </button>
+                <p className="mt-3 font-serif italic text-ivory/60 text-sm">Your presence would make this celebration truly complete.</p>
+                <motion.button
+                  whileHover={{ scale: 1.06 }}
+                  whileTap={{ scale: 0.96 }}
+                  onClick={handleAccept}
+                  className="mt-10 inline-flex items-center gap-3 rounded-full border border-gold bg-gradient-to-r from-[oklch(0.78_0.14_80)] to-[oklch(0.65_0.13_60)] px-10 py-4 font-display text-sm tracking-[0.3em] text-maroon-deep shadow-[0_10px_50px_-10px_oklch(0.78_0.14_80)] transition"
+                >
+                  <span>🎉</span> ACCEPT INVITATION <span>🎉</span>
+                </motion.button>
               </motion.div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            ) : (
+              <motion.div
+                key="thank-you-card"
+                initial={{ scale: 0.8, opacity: 0, rotate: -3 }}
+                animate={{ scale: 1, opacity: 1, rotate: 0 }}
+                transition={{ type: "spring", duration: 0.8, bounce: 0.4 }}
+                className="relative z-10 w-full rounded-3xl border-2 border-gold p-10 text-center shadow-[0_0_50px_rgba(255,215,0,0.3)] bg-gradient-to-br from-[oklch(0.18_0.10_18)] to-[oklch(0.28_0.13_18)] overflow-hidden"
+              >
+                {/* Internal Confetti burst */}
+                <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
+                  {particles.map((p) => (
+                    <motion.div
+                      key={p.id}
+                      initial={{ x: 0, y: 0, scale: 0, rotate: 0, opacity: 1 }}
+                      animate={{ x: p.tx, y: p.ty, scale: [0, 1.4, 0.6, 0], rotate: p.rotate, opacity: [1, 1, 0.6, 0] }}
+                      transition={{ duration: 2.2, ease: "easeOut", delay: p.delay }}
+                      className="absolute rounded-sm"
+                      style={{ width: p.w, height: p.h, backgroundColor: p.color, boxShadow: `0 0 ${p.w}px ${p.color}` }}
+                    />
+                  ))}
+                </div>
 
-      <Section id="accept" accent="oklch(0.30 0.13 18)">
-        <div className="mx-auto max-w-2xl text-center">
-          <p className="font-display text-xs tracking-[0.5em] text-gold/80">YOU ARE INVITED</p>
-          <h2 className="mt-2 font-script text-6xl text-gold-gradient md:text-7xl">Join Us</h2>
-          <OrnateDivider />
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="mt-8 rounded-xl border border-gold/40 bg-black/40 p-6 backdrop-blur-md shadow-2xl transition-all hover:border-gold hover:shadow-[0_0_20px_rgba(255,215,0,0.2)]"
-          >
-            <p className="font-script text-3xl text-gold/90">Dear {guestName},</p>
-            <p className="mt-5 font-serif text-xl leading-relaxed text-ivory/90 md:text-2xl">
-              Will you join us on our <span className="text-gold font-semibold">special day</span>?
-            </p>
-            <p className="mt-3 font-serif italic text-ivory/60 text-sm">Your presence would make this celebration truly complete.</p>
-            <motion.button
-              whileHover={{ scale: 1.06 }}
-              whileTap={{ scale: 0.96 }}
-              onClick={handleAccept}
-              className="mt-10 inline-flex items-center gap-3 rounded-full border border-gold bg-gradient-to-r from-[oklch(0.78_0.14_80)] to-[oklch(0.65_0.13_60)] px-10 py-4 font-display text-sm tracking-[0.3em] text-maroon-deep shadow-[0_10px_50px_-10px_oklch(0.78_0.14_80)] transition"
-            >
-              <span>🎉</span> ACCEPT INVITATION <span>🎉</span>
-            </motion.button>
-          </motion.div>
+                <motion.div animate={{ rotate: [0,-12,12,-6,6,0] }} transition={{ delay: 0.5, duration: 0.9 }} className="text-7xl">🎊</motion.div>
+                <motion.div initial={{ opacity:0,y:25 }} animate={{ opacity:1,y:0 }} transition={{ delay:0.4 }}>
+                  <motion.h2 
+                    animate={{ scale: [1, 1.05, 1], filter: ["drop-shadow(0 0 10px rgba(255,215,0,0.2))", "drop-shadow(0 0 25px rgba(255,215,0,0.6))", "drop-shadow(0 0 10px rgba(255,215,0,0.2))"] }}
+                    transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                    className="mt-5 font-script text-5xl text-gold-gradient"
+                  >
+                    Thank You, {guestName}!
+                  </motion.h2>
+                </motion.div>
+                <motion.p initial={{ opacity:0,y:18 }} animate={{ opacity:1,y:0 }} transition={{ delay:0.6 }} className="mt-2 font-serif italic text-2xl text-ivory/80">Your presence means the world to us.</motion.p>
+                <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.85 }}>
+                  <p className="mt-6 font-serif text-lg leading-relaxed text-ivory/95">
+                    Ravi &amp; Ranjana are overjoyed to celebrate this special day with you. We can't wait! 🌸
+                  </p>
+                  <div className="mt-6 flex justify-center gap-3">
+                    <Diya size={35} /><Diya size={50} /><Diya size={35} />
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
         <SectionNavButtons backId="wishes" nextId="countdown" />
+      </div>
     </Section>
-    </>
   );
 }
 
