@@ -406,13 +406,17 @@ function StorySection() {
               <div className={`ml-14 w-[calc(100%-3.5rem)] md:ml-0 md:w-1/2 ${i % 2 === 0 ? "md:pr-16" : "md:pl-16"}`}>
                 <div className="group overflow-hidden rounded-3xl border border-maroon-deep/10 bg-white/40 p-1 backdrop-blur-md transition-all hover:border-maroon-deep/30 hover:shadow-xl">
                   <div className="overflow-hidden rounded-2xl bg-maroon-deep/5 p-6 md:p-8">
-                    <p className="font-display text-[10px] md:text-xs tracking-[0.4em] text-maroon-deep/60 uppercase">{m.date}</p>
+                    <p className="font-display text-[10px] md:text-xs tracking-[0.4em] text-gold/80 uppercase">{m.date}</p>
                     <h3 className="mt-2 font-script text-4xl md:text-5xl text-maroon-deep">{m.title}</h3>
                     <p className="mt-4 font-serif text-maroon-deep/80 text-base md:text-lg leading-relaxed">{m.text}</p>
                     
                     {m.img && (
-                      <div className="mt-6 h-48 overflow-hidden rounded-xl border border-maroon-deep/10 grayscale hover:grayscale-0 transition-all duration-700">
-                        <img src={m.img} alt={m.title} className="h-full w-full object-cover" />
+                      <div className="mt-6 h-48 overflow-hidden rounded-xl border-4 border-double border-gold/60 shadow-[0_0_15px_rgba(255,215,0,0.2)] transition-all duration-700 group-hover:border-gold">
+                        <img 
+                          src={m.img} 
+                          alt={m.title} 
+                          className="h-full w-full object-cover sepia-[0.2] brightness-105 transition-all duration-700 group-hover:sepia-0" 
+                        />
                       </div>
                     )}
                   </div>
