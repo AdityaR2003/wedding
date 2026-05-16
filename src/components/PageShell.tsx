@@ -1,6 +1,6 @@
-export function OrnateDivider() {
+export function OrnateDivider({ className = "" }: { className?: string }) {
   return (
-    <div className="my-6 flex items-center justify-center gap-4">
+    <div className={`my-6 flex items-center justify-center gap-4 ${className}`}>
       <span className="h-px w-16 bg-gradient-to-r from-transparent to-gold" />
       <svg width="28" height="28" viewBox="0 0 24 24" className="text-gold">
         <path

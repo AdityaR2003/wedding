@@ -5,7 +5,9 @@ interface SandeshPatrProps {
   children: ReactNode;
   guestName?: string;
   className?: string;
+  variant?: "light" | "dark";
 }
+
 
 export function SandeshPatr({ children, guestName, className = "", variant = "light" }: SandeshPatrProps) {
   const isDark = variant === "dark";

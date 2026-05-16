@@ -6,6 +6,8 @@ interface ScratchInvitationProps {
   guestName?: string;
 }
 
+
+
 export function ScratchInvitation({ onComplete, guestName }: ScratchInvitationProps) {
   const [sealBroken, setSealBroken] = useState(false);
 
@@ -89,7 +91,7 @@ export function ScratchInvitation({ onComplete, guestName }: ScratchInvitationPr
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 whileTap={{ scale: 0.9, rotate: -8 }}
                 exit={{ scale: 2.5, opacity: 0, rotate: 25 }}
-                transition={{ exit: { duration: 0.6, ease: "easeOut" } }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
                 className="relative flex flex-col items-center justify-center cursor-pointer select-none"
                 style={{ width: 88, height: 88 }}
                 aria-label="Break the seal to open invitation"

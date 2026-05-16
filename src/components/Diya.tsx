@@ -1,6 +1,6 @@
-export function Diya({ size = 56 }: { size?: number }) {
+export function Diya({ size = 56, className = "" }: { size?: number; className?: string }) {
   return (
-    <div className="relative inline-flex flex-col items-center" style={{ width: size }}>
+    <div className={`relative inline-flex flex-col items-center ${className}`} style={{ width: size }}>
       <div
         className="animate-flicker"
         style={{
