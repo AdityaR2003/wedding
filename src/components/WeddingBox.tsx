@@ -120,7 +120,7 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
               <h2 className="relative z-10 font-deva text-5xl text-gold-gradient text-center mb-6">शुभ विवाह</h2>
 
               {/* Ganeshji Image with Pillars */}
-              <div className="relative z-10 flex items-end gap-5 mb-6">
+              <div className="relative z-10 flex items-end gap-5 mb-6" style={{ mixBlendMode: "screen" }}>
                 {/* Left Pillar */}
                 <motion.div
                   initial={{ scaleY: 0 }}
@@ -138,9 +138,6 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
                   src={pinkGanesha} 
                   alt="Ganesha" 
                   className="h-32 w-auto"
-                  style={{ 
-                    // Removed mixBlendMode and maskImage for a cleaner look
-                  }}
                   animate={{ scale: [1, 1.05, 1] }}
                   transition={{ duration: 4, repeat: Infinity }}
                 />
