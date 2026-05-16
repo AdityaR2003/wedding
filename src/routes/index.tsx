@@ -34,7 +34,11 @@ import groomFamilyTrip from "@/assets/groom_family_trip_1778654027470.png";
 import groomBrotherSahil from "@/assets/groom_brother_sahil.png";
 import groomSisterRiya from "@/assets/groom_sister_riya.png";
 
-import storyCardBg from "@/assets/story_card_bg.png";
+import storyCollegeImg from "@/assets/story_college.png";
+import storyLibraryImg from "@/assets/story_library.png";
+import storyCoffeeImg from "@/assets/story_coffee.png";
+import storyRestaurantImg from "@/assets/story_restaurant.png";
+import storyFamilyHomeImg from "@/assets/story_family_home.png";
 import ritualHaldi from "@/assets/ritual_haldi.png";
 import ritualMehendi from "@/assets/ritual_mehendi.png";
 import ritualSangeet from "@/assets/ritual_sangeet.png";
@@ -334,12 +338,11 @@ function HomeSection({ guestName, revealed, setRevealed }: { guestName: string, 
 }
 
 const moments = [
-  { icon: Heart, title: "College Days", date: "First Meet", text: "A vibrant day at college where our eyes met across the lecture hall, and a simple hello changed everything." },
-  { icon: MessageCircle, title: "First Meet", date: "The Library", text: "Amidst the scent of old books and quiet whispers, we spent hours talking about our dreams and favorite authors." },
-  { icon: Coffee, title: "First Conversation", date: "Coffee Shop", text: "Over lattes and shared smiles at our favorite cafe, we realized that one date would never be enough." },
-  { icon: Utensils, title: "First Date", date: "The Restaurant", text: "Under the soft glow of candlelight and a heartfelt promise, he asked, and she said yes to forever." },
-  { icon: Gem, title: "The Proposal", date: "At Home", text: "A joyful day where two families sat together, sharing laughter and sweets, becoming one large, happy family." },
-  { icon: Users, title: "Family Meeting", date: "Family Meeting", text: "" },
+  { icon: Heart, title: "First Meet", date: "College Days", img: storyCollegeImg, text: "A vibrant day at college where our eyes met across the lecture hall, and a simple hello changed everything." },
+  { icon: MessageCircle, title: "First Conversation", date: "The Library", img: storyLibraryImg, text: "Amidst the scent of old books and quiet whispers, we spent hours talking about our dreams and favorite authors." },
+  { icon: Coffee, title: "First Date", date: "Coffee Shop", img: storyCoffeeImg, text: "Over lattes and shared smiles at our favorite cafe, we realized that one date would never be enough." },
+  { icon: Gem, title: "The Proposal", date: "The Restaurant", img: storyRestaurantImg, text: "Under the soft glow of candlelight and a heartfelt promise, he asked, and she said yes to forever." },
+  { icon: Users, title: "Family Meeting", date: "At Home", img: storyFamilyHomeImg, text: "A joyful day where two families sat together, sharing laughter and sweets, becoming one large, happy family." },
 ];
 
 function TimelineLine() {
@@ -402,16 +405,20 @@ function StorySection() {
                 </motion.div>
               </div>
               <div className={`w-1/2 ${i % 2 === 0 ? "pr-5 md:pr-16" : "pl-5 md:pl-16"}`}>
-                <div className="relative group overflow-hidden rounded-2xl shadow-2xl transition-all hover:scale-[1.02] hover:shadow-gold/20">
-                  {/* Card Background Template */}
-                  <img src={storyCardBg} alt="template" className="absolute inset-0 h-full w-full object-cover" />
-                  
-                  {/* Content Overlay */}
-                  <div className="relative z-10 p-10 md:p-14 text-center">
-                    <p className="font-display text-[9px] md:text-xs tracking-[0.4em] text-maroon-deep/60 uppercase mb-3">{m.date}</p>
-                    <h3 className="font-script text-3xl md:text-6xl text-maroon-deep leading-tight mb-4">{m.title}</h3>
-                    {m.text && (
-                      <p className="font-serif text-maroon-deep/80 text-[10px] md:text-xl leading-relaxed italic border-t border-maroon-deep/10 pt-4 max-w-[280px] mx-auto">{m.text}</p>
+                <div className="group overflow-hidden rounded-3xl border border-gold/10 bg-maroon-deep/40 p-1 backdrop-blur-md transition-all hover:border-gold/30 hover:shadow-xl">
+                  <div className="overflow-hidden rounded-2xl bg-black/20 p-4 md:p-8">
+                    <p className="font-display text-[8px] md:text-xs tracking-[0.4em] text-gold/80 uppercase">{m.date}</p>
+                    <h3 className="mt-1 md:mt-2 font-script text-2xl md:text-5xl text-gold leading-tight">{m.title}</h3>
+                    <p className="mt-2 md:mt-4 font-serif text-ivory/80 text-[10px] md:text-lg leading-relaxed">{m.text}</p>
+                    
+                    {m.img && (
+                      <div className="mt-4 md:mt-6 h-32 md:h-48 overflow-hidden rounded-xl border-4 border-double border-gold/60 shadow-[0_0_15px_rgba(255,215,0,0.2)] transition-all duration-700 group-hover:border-gold">
+                        <img 
+                          src={m.img} 
+                          alt={m.title} 
+                          className="h-full w-full object-cover sepia-[0.2] brightness-105 transition-all duration-700 group-hover:sepia-0" 
+                        />
+                      </div>
                     )}
                   </div>
                 </div>
