@@ -554,20 +554,22 @@ function FamilyCard({ family, index }: { family: any, index: number }) {
 
 function FamilySection({ guestName }: { guestName: string }) {
   return (
-    <Section id="family" accent="oklch(0.95 0.05 340)">
-      <div className="mx-auto max-w-5xl">
-        <div className="text-center">
-          <p className="font-display text-sm tracking-[0.4em] text-maroon-deep/60 uppercase">Our Families</p>
-          <h2 className="mt-2 font-script text-6xl text-maroon-deep md:text-7xl">Joined by Love</h2>
-          <OrnateDivider />
-          <p className="mt-4 font-serif italic text-maroon-deep/70 text-lg md:text-xl">Two families, joined by love, blessed by tradition.</p>
-        </div>
+    <Section id="family" accent="oklch(0.28 0.10 250)">
+      <div className="mx-auto max-w-5xl px-4">
+        <SandeshPatr variant="dark" className="!max-w-none">
+          <div className="text-center">
+            <p className="font-display text-sm tracking-[0.4em] text-gold/60 uppercase">Our Families</p>
+            <h2 className="mt-2 font-script text-6xl text-gold md:text-7xl">Joined by Love</h2>
+            <OrnateDivider />
+            <p className="mt-4 font-serif italic text-ivory/80 text-lg md:text-xl">Two families, joined by love, blessed by tradition.</p>
+          </div>
 
-        <div className="mt-16 grid gap-12 grid-cols-1 md:grid-cols-2 px-4">
-          {families.map((f, i) => (
-            <FamilyCard key={f.title} family={f} index={i} />
-          ))}
-        </div>
+          <div className="mt-16 grid gap-12 grid-cols-1 lg:grid-cols-2">
+            {families.map((f, i) => (
+              <FamilyCard key={f.title} family={f} index={i} />
+            ))}
+          </div>
+        </SandeshPatr>
         <SectionNavButtons backId="venue" nextId="wishes" />
       </div>
     </Section>

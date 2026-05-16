@@ -50,7 +50,7 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
   const colors = ["#FFD700", "#FF4500", "#FF1493", "#00CED1", "#FFFFFF", "#FF69B4"];
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/90 perspective-[1000px]">
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-[radial-gradient(ellipse_at_top,_oklch(0.34_0.13_18)_0%,_oklch(0.16_0.07_22)_70%,_oklch(0.10_0.05_20)_100%)] perspective-[1000px]">
       <AnimatePresence>
         {!showCrackers && (
           <motion.div
@@ -116,6 +116,9 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
               <div className="absolute bottom-2 left-2 w-14 h-14 border-b-4 border-l-4 border-gold/60 rounded-bl-lg" />
               <div className="absolute bottom-2 right-2 w-14 h-14 border-b-4 border-r-4 border-gold/60 rounded-br-lg" />
 
+              {/* Welcome Text */}
+              <h2 className="relative z-10 font-deva text-5xl text-gold-gradient text-center mb-6">शुभ विवाह</h2>
+
               {/* Ganeshji Image with Pillars */}
               <div className="relative z-10 flex items-end gap-5 mb-6">
                 {/* Left Pillar */}
@@ -155,9 +158,6 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
                   <div className="w-full h-2 rounded-b-sm bg-gradient-to-r from-amber-800 via-gold to-amber-900 shadow-lg" />
                 </motion.div>
               </div>
-
-              {/* Welcome Text */}
-              <h2 className="relative z-10 font-deva text-5xl text-gold-gradient text-center mb-3">शुभ विवाह</h2>
               
               {/* Guest Name */}
               <div className="relative z-10 py-5 px-8 border-y border-gold/40 my-4 bg-white/10 backdrop-blur-sm">

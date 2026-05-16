@@ -7,7 +7,9 @@ interface SandeshPatrProps {
   className?: string;
 }
 
-export function SandeshPatr({ children, guestName, className = "" }: SandeshPatrProps) {
+export function SandeshPatr({ children, guestName, className = "", variant = "light" }: SandeshPatrProps) {
+  const isDark = variant === "dark";
+  
   return (
     <div className={`relative mx-auto max-w-2xl w-full px-4 py-12 md:px-4 ${className}`}>
       {/* Floral Mandala Decorations */}
@@ -40,8 +42,11 @@ export function SandeshPatr({ children, guestName, className = "" }: SandeshPatr
         initial={{ height: 0, opacity: 0 }}
         whileInView={{ height: "auto", opacity: 1 }}
         viewport={{ once: true }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-        className="relative overflow-hidden rounded-sm border-x border-gold/20 bg-[#f4e4bc] bg-[url('https://www.transparenttextures.com/patterns/parchment.png')] p-6 pt-10 md:p-14 md:pt-16 shadow-2xl"
+        className={`relative overflow-hidden rounded-sm border-x border-gold/20 p-6 pt-10 md:p-14 md:pt-16 shadow-2xl ${
+          isDark 
+            ? "bg-gradient-to-b from-oklch(0.28_0.10_250) to-oklch(0.10_0.05_20)" 
+            : "bg-[#f4e4bc] bg-[url('https://www.transparenttextures.com/patterns/parchment.png')]"
+        }`}
       >
         {/* Ornate Inner Border */}
         <div className="absolute inset-2 pointer-events-none border border-maroon/10 rounded-sm md:inset-4" />
@@ -57,7 +62,7 @@ export function SandeshPatr({ children, guestName, className = "" }: SandeshPatr
             className="mb-6 text-center md:mb-8"
           >
             <p className="font-display text-[8px] tracking-[0.5em] text-maroon/60 uppercase md:text-[10px]">Personal Invitation for</p>
-            <h4 className="mt-2 font-script text-3xl text-maroon-deep md:text-5xl">
+            <h4 className={`mt-2 font-script text-3xl md:text-5xl ${isDark ? "text-gold" : "text-maroon-deep"}`}>
               {guestName}
             </h4>
             <div className="mt-3 flex items-center justify-center gap-3 md:mt-4">
@@ -68,7 +73,7 @@ export function SandeshPatr({ children, guestName, className = "" }: SandeshPatr
           </motion.div>
         )}
 
-        <div className="relative z-10 text-maroon-deep">
+        <div className={`relative z-10 ${isDark ? "text-ivory" : "text-maroon-deep"}`}>
           {children}
         </div>
       </motion.div>
