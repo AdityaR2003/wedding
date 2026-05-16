@@ -379,7 +379,7 @@ function TimelineLine() {
 
 function StorySection() {
   return (
-    <Section id="story" accent="oklch(0.95 0.05 340)">
+    <Section id="story" accent="#EBAEA8">
       <div className="mx-auto max-w-4xl">
         <h2 className="mt-2 text-center font-script text-6xl text-maroon-deep md:text-7xl">Journey of Love</h2>
         <OrnateDivider />

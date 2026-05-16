@@ -20,7 +20,7 @@ export function Section({
       className={`relative w-full px-4 py-16 md:px-8 md:py-32 ${className} ${isLightBackground ? "text-maroon-deep" : "text-ivory"}`}
       style={{
         background: isLightBackground
-          ? "oklch(0.95 0.05 340)" // Premium Pink Stationery Background
+          ? (accent.startsWith("oklch") && accent === "oklch(0.30 0.13 18)" ? "oklch(0.95 0.05 340)" : accent)
           : `radial-gradient(ellipse at top, ${accent} 0%, oklch(0.16 0.07 22) 70%, oklch(0.10 0.05 20) 100%)`,
       }}
     >
