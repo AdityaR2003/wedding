@@ -12,14 +12,24 @@ export function Section({
   children: ReactNode;
   className?: string;
 }) {
+  const isLightBackground = id !== "home" && id !== "venue" && id !== "box";
+  
   return (
     <section
       id={id}
-      className={`relative w-full px-4 py-16 md:px-8 md:py-32 ${className}`}
+      className={`relative w-full px-4 py-16 md:px-8 md:py-32 ${className} ${isLightBackground ? "text-maroon-deep" : "text-ivory"}`}
       style={{
-        background: `radial-gradient(ellipse at top, ${accent} 0%, oklch(0.16 0.07 22) 70%, oklch(0.10 0.05 20) 100%)`,
+        background: isLightBackground
+          ? "oklch(0.95 0.05 340)" // Premium Pink Stationery Background
+          : `radial-gradient(ellipse at top, ${accent} 0%, oklch(0.16 0.07 22) 70%, oklch(0.10 0.05 20) 100%)`,
       }}
     >
+      {isLightBackground && (
+        <div 
+          className="absolute inset-0 opacity-[0.05] pointer-events-none" 
+          style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/silk-weave.png')" }} 
+        />
+      )}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}

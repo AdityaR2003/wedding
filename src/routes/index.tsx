@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { motion, AnimatePresence, useScroll, useSpring, useTransform } from "framer-motion";
+import { useEffect, useState, useRef, useMemo } from "react";
 import { z } from "zod";
-import { Heart, MessageCircle, Coffee, Gem, Users, MapPin, Sparkles } from "lucide-react";
+import { Heart, MessageCircle, Coffee, Gem, Users, MapPin, Sparkles, ChevronLeft, ChevronRight, X } from "lucide-react";
 import ganesha from "@/assets/ganesha.png";
 import pinkGanesha from "@/assets/pink_ganesha.png";
 import templeDoor from "@/assets/temple-door.jpg";
@@ -13,21 +13,27 @@ import { Section } from "@/components/Section";
 import { SandeshPatr } from "@/components/SandeshPatr";
 import { Phone, MessageSquare, Send } from "lucide-react";
 
-import { Petals, GoldenParticles } from "@/components/Petals";
+import { Petals, GoldenParticles, LotusPetals } from "@/components/Petals";
 import { RitualCard } from "@/components/RitualCard";
 import { WeddingBox } from "@/components/WeddingBox";
 
-const WhatsAppIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
-  <svg viewBox="0 0 24 24" className={`${className} fill-current`}>
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.122 1.523 5.853L.057 23.617c-.073.27.162.519.432.459l6.014-1.387A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.892 0-3.659-.519-5.168-1.421l-.359-.215-3.724.857.902-3.607-.236-.371A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
-  </svg>
-);
 import brideImg from "@/assets/bride.png";
 import groomImg from "@/assets/groom.png";
 import brideFatherImg from "@/assets/bride_father_new.png";
 import brideMotherImg from "@/assets/bride_mother_new.png";
 import groomFatherImg from "@/assets/groom_father.png";
 import groomMotherImg from "@/assets/groom_mother.png";
+
+// Family Album Images
+import brideFatherAlbum from "@/assets/bride_father_album.png";
+import brideMotherAlbum from "@/assets/bride_mother_album.png";
+import groomFatherAlbum from "@/assets/groom_father_album.png";
+import groomMotherAlbum from "@/assets/groom_mother_album.png";
+import brideFamilyTrip from "@/assets/bride_family_trip_1778653956608.png";
+import groomFamilyTrip from "@/assets/groom_family_trip_1778654027470.png";
+import groomBrotherSahil from "@/assets/groom_brother_sahil.png";
+import groomSisterRiya from "@/assets/groom_sister_riya.png";
+
 import storyCollegeImg from "@/assets/story_college.png";
 import storyLibraryImg from "@/assets/story_library.png";
 import storyCoffeeImg from "@/assets/story_coffee.png";
@@ -38,6 +44,12 @@ import ritualMehendi from "@/assets/ritual_mehendi.png";
 import ritualSangeet from "@/assets/ritual_sangeet.png";
 import ritualVivaah from "@/assets/ritual_vivaah.png";
 import ritualReception from "@/assets/ritual_reception.png";
+
+const WhatsAppIcon = ({ className = "h-5 w-5" }: { className?: string }) => (
+  <svg viewBox="0 0 24 24" className={`${className} fill-current`}>
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z M12 0C5.373 0 0 5.373 0 12c0 2.126.553 4.122 1.523 5.853L.057 23.617c-.073.27.162.519.432.459l6.014-1.387A11.934 11.934 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22c-1.892 0-3.659-.519-5.168-1.421l-.359-.215-3.724.857.902-3.607-.236-.371A9.956 9.956 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z" />
+  </svg>
+);
 
 const welcomeSearchSchema = z.object({
   guest: z.string().optional(),
@@ -113,7 +125,7 @@ function Welcome() {
       {/* All sections */}
       {opened && (
         <div className="flex flex-col">
-          <Petals count={25} />
+          <LotusPetals count={30} />
           <HomeSection guestName={guestName} revealed={revealed} setRevealed={setRevealed} />
           
           <AnimatePresence>
@@ -332,58 +344,77 @@ const moments = [
   { icon: Users, title: "Family Meeting", date: "At Home", img: storyFamilyHomeImg, text: "A joyful day where two families sat together, sharing laughter and sweets, becoming one large, happy family." },
 ];
 
+function TimelineLine() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start center", "end center"]
+  });
+
+  const springProgress = useSpring(scrollYProgress, {
+    stiffness: 60,
+    damping: 20,
+    restDelta: 0.001
+  });
+
+  const pathLength = useTransform(springProgress, [0, 1], [0, 1]);
+
+  return (
+    <div ref={containerRef} className="absolute left-8 top-0 h-full w-24 md:left-1/2 md:-translate-x-1/2 pointer-events-none z-0">
+      <svg width="100%" height="100%" viewBox="0 0 100 1000" preserveAspectRatio="none" className="h-full w-full">
+        {/* Animated Zigzag Path */}
+        <motion.path
+          d="M50,0 C80,150 20,250 50,400 C80,550 20,650 50,800 C80,950 20,1050 50,1200"
+          fill="none"
+          stroke="#9e2a44"
+          strokeWidth="2.5"
+          strokeLinecap="round"
+          strokeDasharray="10 15"
+          style={{ pathLength }}
+        />
+      </svg>
+    </div>
+  );
+}
+
 function StorySection() {
   return (
-    <Section id="story" accent="oklch(0.30 0.13 18)">
+    <Section id="story" accent="oklch(0.95 0.05 340)">
       <div className="mx-auto max-w-4xl">
-
-        <h2 className="mt-2 text-center font-script text-6xl text-gold-gradient md:text-7xl">Journey of Love</h2>
+        <h2 className="mt-2 text-center font-script text-6xl text-maroon-deep md:text-7xl">Journey of Love</h2>
         <OrnateDivider />
-        <div className="relative mt-12 px-4 md:px-0">
-          <div className="absolute left-8 top-0 h-full w-px bg-gradient-to-b from-gold via-gold/40 to-transparent md:left-1/2" />
+        <div className="relative mt-20 px-4 md:px-0">
+          <TimelineLine />
           {moments.map((m, i) => (
             <motion.div
               key={m.title}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.7, delay: i * 0.05 }}
-              className={`relative mb-16 flex flex-col gap-6 md:flex-row md:items-center ${i % 2 ? "md:flex-row-reverse" : ""}`}
+              id={`moment-${i}`}
+              initial={{ opacity: 0, x: i % 2 === 0 ? -50 : 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.8, delay: i * 0.1 }}
+              className={`relative mb-32 flex flex-col gap-6 md:flex-row md:items-center ${i % 2 ? "md:flex-row-reverse" : ""}`}
             >
               <div className="absolute left-8 z-10 -translate-x-1/2 md:left-1/2">
-                <div className="flex h-12 w-12 items-center justify-center rounded-full border border-gold bg-maroon-deep text-gold shadow-[0_0_15px_rgba(255,215,0,0.3)]">
+                <motion.div 
+                  whileHover={{ scale: 1.2, rotate: 360 }}
+                  className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-maroon-deep bg-white text-maroon-deep shadow-lg transition-colors hover:bg-maroon-deep hover:text-white"
+                >
                   <m.icon className="h-5 w-5" />
-                </div>
+                </motion.div>
               </div>
-              <div className="ml-14 w-[calc(100%-3.5rem)] md:ml-0 md:w-1/2 md:px-10">
-                <div className="group overflow-hidden rounded-2xl border border-gold/40 bg-maroon-deep/60 backdrop-blur-sm transition-all hover:border-gold hover:shadow-[0_0_30px_rgba(255,215,0,0.2)]">
-                  {m.img && (
-                    <div className="h-48 md:h-64 w-full overflow-hidden border-b border-gold/20">
-                      <motion.img 
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ duration: 0.5 }}
-                        src={m.img} 
-                        alt={m.title} 
-                        className="h-full w-full object-cover opacity-80 mix-blend-luminosity hover:mix-blend-normal hover:opacity-100" 
-                      />
-                    </div>
-                  )}
-                  <div className="p-6 md:p-10">
-                    <p className="font-display text-xs md:text-sm tracking-[0.3em] text-gold/80">{m.date}</p>
-                    <h3 className="mt-2 font-script text-3xl md:text-5xl text-ivory">{m.title}</h3>
-                    <p className="mt-3 font-serif text-ivory/85 text-base md:text-xl leading-relaxed">{m.text}</p>
+              <div className={`ml-14 w-[calc(100%-3.5rem)] md:ml-0 md:w-1/2 ${i % 2 === 0 ? "md:pr-16" : "md:pl-16"}`}>
+                <div className="group overflow-hidden rounded-3xl border border-maroon-deep/10 bg-white/40 p-1 backdrop-blur-md transition-all hover:border-maroon-deep/30 hover:shadow-xl">
+                  <div className="overflow-hidden rounded-2xl bg-maroon-deep/5 p-6 md:p-8">
+                    <p className="font-display text-[10px] md:text-xs tracking-[0.4em] text-maroon-deep/60 uppercase">{m.date}</p>
+                    <h3 className="mt-2 font-script text-4xl md:text-5xl text-maroon-deep">{m.title}</h3>
+                    <p className="mt-4 font-serif text-maroon-deep/80 text-base md:text-lg leading-relaxed">{m.text}</p>
                     
-                    {/* Inner moment navigation */}
-                    <div className="mt-6 flex justify-between gap-4">
-                      {i > 0 && (
-                        <button onClick={() => document.getElementById(`moment-${i-1}`)?.scrollIntoView({ behavior: "smooth" })} className="text-gold/60 text-[8px] hover:text-gold uppercase tracking-widest">← Previous</button>
-                      )}
-                      {i < moments.length - 1 ? (
-                        <button onClick={() => document.getElementById(`moment-${i+1}`)?.scrollIntoView({ behavior: "smooth" })} className="text-gold/60 text-[8px] hover:text-gold uppercase tracking-widest ml-auto">Next Moment →</button>
-                      ) : (
-                        <button onClick={() => document.getElementById("rituals")?.scrollIntoView({ behavior: "smooth" })} className="text-gold/60 text-[8px] hover:text-gold uppercase tracking-widest ml-auto">To Rituals ↓</button>
-                      )}
-                    </div>
+                    {m.img && (
+                      <div className="mt-6 h-48 overflow-hidden rounded-xl border border-maroon-deep/10 grayscale hover:grayscale-0 transition-all duration-700">
+                        <img src={m.img} alt={m.title} className="h-full w-full object-cover" />
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -401,128 +432,136 @@ function StorySection() {
 
 /* ======================== FAMILY ======================== */
 const families = [
-  { title: "BRIDE'S FAMILY", name: "The Sharmas", members: [
-    { role: "Father", name: "Shri Rajesh Sharma", img: brideFatherImg },
-    { role: "Mother", name: "Smt. Meera Sharma", img: brideMotherImg },
-  ]},
-  { title: "GROOM'S FAMILY", name: "The Mishras", members: [
-    { role: "Father", name: "Shri Vikram Mishra", img: groomFatherImg },
-    { role: "Mother", name: "Smt. Sunita Mishra", img: groomMotherImg },
-  ]},
+  { 
+    title: "BRIDE'S FAMILY", 
+    name: "The Sharmas", 
+    members: [
+      { role: "Father", name: "Shri Rajesh Sharma", img: brideFatherImg },
+      { role: "Mother", name: "Smt. Meera Sharma", img: brideMotherImg },
+    ],
+    album: [brideFatherAlbum, brideMotherAlbum, brideFamilyTrip, brideImg]
+  },
+  { 
+    title: "GROOM'S FAMILY", 
+    name: "The Mishras", 
+    members: [
+      { role: "Father", name: "Shri Vikram Mishra", img: groomFatherImg },
+      { role: "Mother", name: "Smt. Sunita Mishra", img: groomMotherImg },
+    ],
+    album: [groomFatherAlbum, groomMotherAlbum, groomFamilyTrip, groomBrotherSahil, groomSisterRiya, groomImg]
+  },
 ];
+
+function FamilyCard({ family, index }: { family: any, index: number }) {
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [photoIndex, setPhotoIndex] = useState(0);
+
+  const nextPhoto = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setPhotoIndex((prev) => (prev + 1) % family.album.length);
+  };
+
+  const prevPhoto = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setPhotoIndex((prev) => (prev - 1 + family.album.length) % family.album.length);
+  };
+
+  return (
+    <div className="group relative h-[480px] w-full [perspective:1500px]">
+      <motion.div
+        animate={{ rotateY: isFlipped ? 180 : 0 }}
+        transition={{ duration: 0.8, type: "spring", stiffness: 100, damping: 20 }}
+        className="relative h-full w-full [transform-style:preserve-3d]"
+      >
+        {/* Front Side */}
+        <div className="absolute inset-0 [backface-visibility:hidden] rounded-[2rem] border border-maroon-deep/10 bg-white/60 p-8 shadow-xl backdrop-blur-md flex flex-col">
+          <div className="flex-1">
+            <p className="font-display text-[10px] tracking-[0.4em] text-maroon-deep/50 uppercase">{family.title}</p>
+            <h3 className="mt-2 font-script text-5xl text-maroon-deep">{family.name}</h3>
+            <div className="mt-8 space-y-6">
+              {family.members.map((m: any) => (
+                <div key={m.name} className="flex items-center gap-5">
+                  <div className="h-20 w-20 flex-shrink-0 overflow-hidden rounded-full border-2 border-maroon-deep/10 shadow-inner">
+                    <img src={m.img} alt={m.name} className="h-full w-full object-cover" />
+                  </div>
+                  <div>
+                    <p className="font-display text-[9px] tracking-[0.2em] text-maroon-deep/40 uppercase">{m.role}</p>
+                    <p className="font-serif text-xl text-maroon-deep/90">{m.name}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <button 
+            onClick={() => setIsFlipped(true)}
+            className="mt-8 w-full rounded-2xl border border-maroon-deep/20 bg-maroon-deep/5 py-4 font-display text-[10px] tracking-[0.3em] text-maroon-deep uppercase transition-all hover:bg-maroon-deep hover:text-white"
+          >
+            VIEW FAMILY PHOTOS ✦
+          </button>
+        </div>
+
+        {/* Back Side (Gallery) */}
+        <div className="absolute inset-0 [backface-visibility:hidden] [transform:rotateY(180deg)] rounded-[2rem] border border-maroon-deep/10 bg-white p-2 shadow-2xl">
+          <div className="relative h-full w-full overflow-hidden rounded-[1.8rem] bg-maroon-deep/5">
+            <AnimatePresence mode="wait">
+              <motion.img
+                key={photoIndex}
+                initial={{ opacity: 0, scale: 1.1 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                src={family.album[photoIndex]}
+                className="h-full w-full object-cover"
+              />
+            </AnimatePresence>
+
+            {/* Gallery Controls */}
+            <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent p-6 text-white">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="font-script text-3xl">{family.name}</p>
+                  <p className="text-[10px] tracking-widest uppercase opacity-70">Moment {photoIndex + 1} of {family.album.length}</p>
+                </div>
+                <div className="flex gap-2">
+                  <button onClick={prevPhoto} className="h-10 w-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white/40 transition-all">
+                    <ChevronLeft className="h-5 w-5" />
+                  </button>
+                  <button onClick={nextPhoto} className="h-10 w-10 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center hover:bg-white/40 transition-all">
+                    <ChevronRight className="h-5 w-5" />
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <button 
+              onClick={() => setIsFlipped(false)}
+              className="absolute top-4 right-4 h-10 w-10 rounded-full bg-black/20 backdrop-blur-md text-white flex items-center justify-center hover:bg-black/40 transition-all"
+            >
+              <X className="h-5 w-5" />
+            </button>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
+}
 
 function FamilySection({ guestName }: { guestName: string }) {
   return (
-    <Section id="family" accent="oklch(0.30 0.12 25)" className="overflow-hidden">
-      <div className="relative">
-        {/* Decorative Curtains Reveal */}
-        <div className="pointer-events-none absolute inset-x-0 -inset-y-32 z-40 flex overflow-hidden">
-          {/* Left Curtain Panel */}
-          <motion.div
-            initial={{ x: 0 }}
-            whileInView={{ 
-              x: ["0%", "-5%", "2%", "-15%", "5%", "-100%"],
-              rotate: [0, -1, 1, -1, 1, 0],
-              skewX: [0, -2, 2, -2, 2, 0]
-            }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 6, ease: "easeInOut", delay: 0.5 }}
-            className="relative h-full w-1/2 bg-[#050505] border-r-[3px] border-gold shadow-[20px_0_80px_rgba(0,0,0,0.9)]"
-            style={{
-              backgroundImage: `
-                linear-gradient(90deg, rgba(0,0,0,0.4) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.4) 100%),
-                repeating-linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.02) 2%, transparent 4%)
-              `,
-            }}
-          >
-            {/* Tassel/Handle Left */}
-            <div className="absolute top-1/2 right-8 -translate-y-1/2 flex flex-col items-center">
-              <div className="h-48 w-0.5 bg-gradient-to-b from-transparent via-gold/50 to-transparent" />
-              <motion.div 
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                className="h-6 w-6 rounded-full bg-gold shadow-[0_0_20px_rgba(255,215,0,0.6)] border border-maroon-deep/30 flex items-center justify-center"
-              >
-                <div className="h-2 w-2 rounded-full bg-maroon-deep" />
-              </motion.div>
-              <div className="h-48 w-0.5 bg-gradient-to-b from-transparent via-gold/50 to-transparent" />
-            </div>
-            
-            {/* Silk Texture Folds */}
-            <div className="absolute inset-0 opacity-20" style={{ background: "linear-gradient(90deg, transparent 0%, #1a1a1a 10%, transparent 20%, #1a1a1a 30%, transparent 40%, #1a1a1a 50%, transparent 60%, #1a1a1a 70%, transparent 80%, #1a1a1a 90%, transparent 100%)" }} />
-          </motion.div>
-
-          {/* Right Curtain Panel */}
-          <motion.div
-            initial={{ x: 0 }}
-            whileInView={{ 
-              x: ["0%", "5%", "-2%", "15%", "-5%", "100%"],
-              rotate: [0, 1, -1, 1, -1, 0],
-              skewX: [0, 2, -2, 2, -2, 0]
-            }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 6, ease: "easeInOut", delay: 0.5 }}
-            className="relative h-full w-1/2 bg-[#050505] border-l-[3px] border-gold shadow-[-20px_0_80px_rgba(0,0,0,0.9)]"
-            style={{
-              backgroundImage: `
-                linear-gradient(90deg, rgba(0,0,0,0.4) 0%, transparent 20%, transparent 80%, rgba(0,0,0,0.4) 100%),
-                repeating-linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.02) 2%, transparent 4%)
-              `,
-            }}
-          >
-            {/* Tassel/Handle Right */}
-            <div className="absolute top-1/2 left-8 -translate-y-1/2 flex flex-col items-center">
-              <div className="h-48 w-0.5 bg-gradient-to-b from-transparent via-gold/50 to-transparent" />
-              <motion.div 
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-                className="h-6 w-6 rounded-full bg-gold shadow-[0_0_20px_rgba(255,215,0,0.6)] border border-maroon-deep/30 flex items-center justify-center"
-              >
-                <div className="h-2 w-2 rounded-full bg-maroon-deep" />
-              </motion.div>
-              <div className="h-48 w-0.5 bg-gradient-to-b from-transparent via-gold/50 to-transparent" />
-            </div>
-
-            {/* Silk Texture Folds */}
-            <div className="absolute inset-0 opacity-20" style={{ background: "linear-gradient(90deg, transparent 0%, #1a1a1a 10%, transparent 20%, #1a1a1a 30%, transparent 40%, #1a1a1a 50%, transparent 60%, #1a1a1a 70%, transparent 80%, #1a1a1a 90%, transparent 100%)" }} />
-          </motion.div>
+    <Section id="family" accent="oklch(0.95 0.05 340)">
+      <div className="mx-auto max-w-5xl">
+        <div className="text-center">
+          <p className="font-display text-sm tracking-[0.4em] text-maroon-deep/60 uppercase">Our Families</p>
+          <h2 className="mt-2 font-script text-6xl text-maroon-deep md:text-7xl">Joined by Love</h2>
+          <OrnateDivider />
+          <p className="mt-4 font-serif italic text-maroon-deep/70 text-lg md:text-xl">Two families, joined by love, blessed by tradition.</p>
         </div>
 
-        <div className="mx-auto max-w-5xl">
-          <h2 className="mt-2 text-center font-script text-6xl text-gold-gradient md:text-7xl">Our Families</h2>
-          <OrnateDivider />
-          <p className="mx-auto mt-2 max-w-xl text-center font-serif italic text-ivory/80">Two families, joined by love, blessed by tradition.</p>
-          
-          <SandeshPatr guestName={guestName} className="mt-12">
-            <div className="grid gap-8 grid-cols-1 md:grid-cols-2 px-2">
-              {families.map((f, i) => (
-                <motion.div
-                  key={f.title}
-                  initial={{ opacity: 0, y: 30 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.8, delay: i * 0.15 }}
-                  className="flex flex-col h-full rounded-xl border border-gold/40 bg-black/40 p-6 backdrop-blur-md shadow-sm transition-all hover:border-gold"
-                >
-                  <p className="font-display text-[10px] tracking-[0.4em] text-gold/80 uppercase">{f.title}</p>
-                  <h3 className="mt-2 font-script text-4xl text-ivory">{f.name}</h3>
-                  <div className="mt-6 flex flex-col flex-1 space-y-4">
-                    {f.members.map((m) => (
-                      <div key={m.name} className="flex items-center gap-4 rounded-lg border border-gold/15 bg-black/30 p-3 hover:border-gold/30 transition-all">
-                        <div className="h-16 w-16 md:h-20 md:w-20 flex-shrink-0 overflow-hidden rounded-full border border-gold/40">
-                          <img src={m.img} alt={m.name} className="h-full w-full object-cover" />
-                        </div>
-                        <div className="flex-1">
-                          <p className="font-display text-[8px] tracking-[0.3em] text-gold/60 uppercase">{m.role}</p>
-                          <p className="font-serif text-base md:text-lg leading-tight text-ivory/90">{m.name}</p>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </SandeshPatr>
+        <div className="mt-16 grid gap-12 grid-cols-1 md:grid-cols-2 px-4">
+          {families.map((f, i) => (
+            <FamilyCard key={f.title} family={f} index={i} />
+          ))}
         </div>
         <SectionNavButtons backId="venue" nextId="wishes" />
       </div>

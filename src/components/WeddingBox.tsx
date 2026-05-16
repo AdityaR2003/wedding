@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import pinkGanesha from "@/assets/pink_ganesha.png";
+import { LotusPetals } from "./Petals";
 
 interface WeddingBoxProps {
   guestName: string;
@@ -72,15 +73,15 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
             style={{ transformStyle: "preserve-3d" }}
             onClick={handleOpen}
           >
-            {/* Box Thickness (Side Walls) */}
-            <div className="absolute inset-0 translate-z-[-20px] bg-[#5a0000] rounded-2xl shadow-[0_20px_50px_rgba(0,0,0,0.6)]" />
+            {/* Box Thickness (Side Walls) - Darker Pink */}
+            <div className="absolute inset-0 translate-z-[-20px] bg-[#9e2a44] rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.4)]" />
 
-            {/* Main Box Body */}
-            <div className="absolute inset-0 bg-[#8b0000] rounded-2xl shadow-[inset_0_0_40px_rgba(0,0,0,0.4),0_10px_0_#600000] border-4 border-gold/40 flex flex-col items-center justify-center p-8 overflow-hidden transform-gpu">
+            {/* Main Box Body - Vibrant Pink */}
+            <div className="absolute inset-0 bg-[#d14d6b] rounded-2xl shadow-[inset_0_0_20px_rgba(0,0,0,0.2),0_8px_0_#9e2a44] border-4 border-gold/40 flex flex-col items-center justify-center p-8 overflow-hidden transform-gpu">
               
-              {/* Royal Damask Pattern */}
-              <div className="absolute inset-0 opacity-[0.07] pointer-events-none mix-blend-overlay" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/black-paper.png'), radial-gradient(circle at center, transparent 0%, black 100%)" }} />
-              <div className="absolute inset-0 opacity-[0.03] pointer-events-none" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/damask.png')" }} />
+              {/* Subtle Silk Pattern (Removed dark vignette) */}
+              <div className="absolute inset-0 opacity-[0.1] pointer-events-none mix-blend-overlay" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/black-paper.png')" }} />
+              <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/damask.png')" }} />
 
               {/* Magical Sparkles */}
               {[...Array(6)].map((_, i) => (
@@ -110,10 +111,10 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
               <div className="absolute top-0 left-0 right-0 h-10 bg-gradient-to-b from-transparent via-gold/10 to-transparent rotate-12 translate-y-8 scale-150 blur-sm" />
               
               {/* Golden Corners */}
-              <div className="absolute top-2 left-2 w-14 h-14 border-t-4 border-l-4 border-gold/60 rounded-tl-lg shadow-[0_0_10px_rgba(255,215,0,0.3)]" />
-              <div className="absolute top-2 right-2 w-14 h-14 border-t-4 border-r-4 border-gold/60 rounded-tr-lg shadow-[0_0_10px_rgba(255,215,0,0.3)]" />
-              <div className="absolute bottom-2 left-2 w-14 h-14 border-b-4 border-l-4 border-gold/60 rounded-bl-lg shadow-[0_0_10px_rgba(255,215,0,0.3)]" />
-              <div className="absolute bottom-2 right-2 w-14 h-14 border-b-4 border-r-4 border-gold/60 rounded-tr-lg shadow-[0_0_10px_rgba(255,215,0,0.3)]" />
+              <div className="absolute top-2 left-2 w-14 h-14 border-t-4 border-l-4 border-gold/60 rounded-tl-lg" />
+              <div className="absolute top-2 right-2 w-14 h-14 border-t-4 border-r-4 border-gold/60 rounded-tr-lg" />
+              <div className="absolute bottom-2 left-2 w-14 h-14 border-b-4 border-l-4 border-gold/60 rounded-bl-lg" />
+              <div className="absolute bottom-2 right-2 w-14 h-14 border-b-4 border-r-4 border-gold/60 rounded-br-lg" />
 
               {/* Ganeshji Image with Pillars */}
               <div className="relative z-10 flex items-end gap-5 mb-6">
@@ -133,14 +134,12 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
                 <motion.img 
                   src={pinkGanesha} 
                   alt="Ganesha" 
-                  className="h-32 w-auto drop-shadow-[0_0_25px_rgba(255,215,0,0.6)]"
+                  className="h-32 w-auto"
                   style={{ 
-                    mixBlendMode: 'lighten',
-                    maskImage: 'radial-gradient(circle at center, black 65%, transparent 98%)',
-                    WebkitMaskImage: 'radial-gradient(circle at center, black 65%, transparent 98%)'
+                    // Removed mixBlendMode and maskImage for a cleaner look
                   }}
-                  animate={{ scale: [1, 1.08, 1], filter: ["brightness(1) contrast(1)", "brightness(1.2) contrast(1.1)", "brightness(1) contrast(1)"] }}
-                  transition={{ duration: 3, repeat: Infinity }}
+                  animate={{ scale: [1, 1.05, 1] }}
+                  transition={{ duration: 4, repeat: Infinity }}
                 />
 
                 {/* Right Pillar */}
@@ -158,12 +157,12 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
               </div>
 
               {/* Welcome Text */}
-              <h2 className="relative z-10 font-deva text-5xl text-gold-gradient text-center mb-3 drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">शुभ विवाह</h2>
+              <h2 className="relative z-10 font-deva text-5xl text-gold-gradient text-center mb-3">शुभ विवाह</h2>
               
               {/* Guest Name */}
-              <div className="relative z-10 py-5 px-8 border-y border-gold/40 my-4 bg-black/10 backdrop-blur-sm">
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#8b0000] px-4 font-display text-[10px] tracking-[0.4em] text-gold font-bold uppercase drop-shadow-sm">Special Guest</span>
-                <p className="font-serif text-3xl text-ivory text-center tracking-widest drop-shadow-md">{guestName}</p>
+              <div className="relative z-10 py-5 px-8 border-y border-gold/40 my-4 bg-white/10 backdrop-blur-sm">
+                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#d14d6b] px-4 font-display text-[10px] tracking-[0.4em] text-gold font-bold uppercase">Special Guest</span>
+                <p className="font-serif text-3xl text-ivory text-center tracking-widest">{guestName}</p>
               </div>
 
               {/* Open Message */}
@@ -173,7 +172,7 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
                 className="relative z-10 mt-8 flex flex-col items-center gap-4"
               >
                 <div className="h-px w-24 bg-gradient-to-r from-transparent via-gold to-transparent" />
-                <p className="font-display text-sm tracking-[0.5em] text-gold font-bold animate-pulse drop-shadow-lg">TAP TO OPEN</p>
+                <p className="font-display text-sm tracking-[0.5em] text-gold font-bold animate-pulse">TAP TO OPEN</p>
                 <div className="h-px w-24 bg-gradient-to-r from-transparent via-gold to-transparent" />
               </motion.div>
             </div>
@@ -183,9 +182,10 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
         )}
       </AnimatePresence>
 
-      {/* Cracker Burst Particles */}
+      {/* Cracker Burst Particles & Lotus Petals */}
       {showCrackers && (
         <div className="absolute inset-0 pointer-events-none flex items-center justify-center">
+          <LotusPetals count={40} />
           {particles.map((i) => (
             <Particle key={i} color={colors[i % colors.length]} x={0} y={0} />
           ))}
