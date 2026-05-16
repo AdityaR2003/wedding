@@ -13,7 +13,7 @@ import { Section } from "@/components/Section";
 import { SandeshPatr } from "@/components/SandeshPatr";
 import { Phone, MessageSquare, Send } from "lucide-react";
 
-import { Petals, GoldenParticles, LotusPetals } from "@/components/Petals";
+import { Petals, GoldenParticles, LotusPetals, FallingHearts } from "@/components/Petals";
 import { RitualCard } from "@/components/RitualCard";
 import { WeddingBox } from "@/components/WeddingBox";
 
@@ -126,6 +126,7 @@ function Welcome() {
       {opened && (
         <div className="flex flex-col">
           <LotusPetals count={30} />
+          <FallingHearts count={25} />
           <HomeSection guestName={guestName} revealed={revealed} setRevealed={setRevealed} />
           
           <AnimatePresence>
@@ -360,17 +361,17 @@ function TimelineLine() {
   const pathLength = useTransform(springProgress, [0, 1], [0, 1]);
 
   return (
-    <div ref={containerRef} className="absolute left-8 top-0 h-full w-24 md:left-1/2 md:-translate-x-1/2 pointer-events-none z-0">
+    <div ref={containerRef} className="absolute left-1/2 -translate-x-1/2 top-0 h-full w-24 pointer-events-none z-0">
       <svg width="100%" height="100%" viewBox="0 0 100 1000" preserveAspectRatio="none" className="h-full w-full">
         {/* Animated Zigzag Path */}
         <motion.path
           d="M50,0 C80,150 20,250 50,400 C80,550 20,650 50,800 C80,950 20,1050 50,1200"
           fill="none"
-          stroke="#9e2a44"
+          stroke="oklch(0.34 0.13 18)"
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeDasharray="10 15"
-          style={{ pathLength }}
+          style={{ pathLength, willChange: "pathLength" }}
         />
       </svg>
     </div>
@@ -393,25 +394,25 @@ function StorySection() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.8, delay: i * 0.1 }}
-              className={`relative mb-32 flex flex-col gap-6 md:flex-row md:items-center ${i % 2 ? "md:flex-row-reverse" : ""}`}
+              className={`relative mb-32 flex items-center justify-center w-full ${i % 2 ? "flex-row-reverse" : "flex-row"}`}
             >
-              <div className="absolute left-8 z-10 -translate-x-1/2 md:left-1/2">
+              <div className={`absolute left-1/2 z-10 -translate-x-1/2`}>
                 <motion.div 
                   whileHover={{ scale: 1.2, rotate: 360 }}
-                  className="flex h-12 w-12 items-center justify-center rounded-full border-2 border-maroon-deep bg-white text-maroon-deep shadow-lg transition-colors hover:bg-maroon-deep hover:text-white"
+                  className="flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full border-2 border-maroon-deep bg-white text-maroon-deep shadow-lg transition-colors hover:bg-maroon-deep hover:text-white"
                 >
-                  <m.icon className="h-5 w-5" />
+                  <m.icon className="h-4 w-4 md:h-5 md:w-5" />
                 </motion.div>
               </div>
-              <div className={`ml-14 w-[calc(100%-3.5rem)] md:ml-0 md:w-1/2 ${i % 2 === 0 ? "md:pr-16" : "md:pl-16"}`}>
+              <div className={`w-1/2 ${i % 2 === 0 ? "pr-5 md:pr-16" : "pl-5 md:pl-16"}`}>
                 <div className="group overflow-hidden rounded-3xl border border-maroon-deep/10 bg-white/40 p-1 backdrop-blur-md transition-all hover:border-maroon-deep/30 hover:shadow-xl">
-                  <div className="overflow-hidden rounded-2xl bg-maroon-deep/5 p-6 md:p-8">
-                    <p className="font-display text-[10px] md:text-xs tracking-[0.4em] text-gold/80 uppercase">{m.date}</p>
-                    <h3 className="mt-2 font-script text-4xl md:text-5xl text-maroon-deep">{m.title}</h3>
-                    <p className="mt-4 font-serif text-maroon-deep/80 text-base md:text-lg leading-relaxed">{m.text}</p>
+                  <div className="overflow-hidden rounded-2xl bg-maroon-deep/5 p-4 md:p-8">
+                    <p className="font-display text-[8px] md:text-xs tracking-[0.4em] text-gold/80 uppercase">{m.date}</p>
+                    <h3 className="mt-1 md:mt-2 font-script text-2xl md:text-5xl text-maroon-deep leading-tight">{m.title}</h3>
+                    <p className="mt-2 md:mt-4 font-serif text-maroon-deep/80 text-[10px] md:text-lg leading-relaxed">{m.text}</p>
                     
                     {m.img && (
-                      <div className="mt-6 h-48 overflow-hidden rounded-xl border-4 border-double border-gold/60 shadow-[0_0_15px_rgba(255,215,0,0.2)] transition-all duration-700 group-hover:border-gold">
+                      <div className="mt-4 md:mt-6 h-32 md:h-48 overflow-hidden rounded-xl border-4 border-double border-gold/60 shadow-[0_0_15px_rgba(255,215,0,0.2)] transition-all duration-700 group-hover:border-gold">
                         <img 
                           src={m.img} 
                           alt={m.title} 
@@ -422,7 +423,7 @@ function StorySection() {
                   </div>
                 </div>
               </div>
-              <div className="hidden md:block md:w-1/2" />
+              <div className="w-1/2" />
             </motion.div>
           ))}
         </div>

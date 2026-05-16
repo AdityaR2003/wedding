@@ -93,6 +93,51 @@ export function GoldenParticles({ count = 40, className = "fixed inset-0" }: { c
   );
 }
 
+export function FallingHearts({ count = 20, className = "fixed inset-0" }: { count?: number, className?: string }) {
+  const hearts = useMemo(
+    () =>
+      Array.from({ length: count }).map((_, i) => ({
+        id: i,
+        left: Math.random() * 100,
+        delay: Math.random() * 10,
+        duration: 6 + Math.random() * 8,
+        size: 15 + Math.random() * 25,
+        rotate: Math.random() * 360,
+        sway: 30 + Math.random() * 60,
+      })),
+    [count],
+  );
+
+  return (
+    <div className={`pointer-events-none z-40 overflow-hidden ${className}`}>
+      {hearts.map((h) => (
+        <motion.div
+          key={h.id}
+          initial={{ top: "-10%", left: `${h.left}%`, opacity: 0, rotate: h.rotate }}
+          animate={{ 
+            top: "110%",
+            left: [`${h.left}%`, `${h.left + (h.sway/10)}%`, `${h.left - (h.sway/10)}%`, `${h.left}%`],
+            opacity: [0, 0.8, 0.8, 0],
+            rotate: h.rotate + 360
+          }}
+          transition={{ 
+            duration: h.duration,
+            delay: h.delay,
+            repeat: Infinity,
+            ease: "linear"
+          }}
+          className="absolute"
+          style={{ width: h.size, height: h.size, willChange: "transform, opacity" }}
+        >
+          <svg viewBox="0 0 24 24" className="w-full h-full fill-pink-400/40 drop-shadow-[0_0_8px_rgba(244,114,182,0.4)]">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+          </svg>
+        </motion.div>
+      ))}
+    </div>
+  );
+}
+
 export function LotusPetals({ count = 25, className = "fixed inset-0" }: { count?: number, className?: string }) {
   const petals = useMemo(
     () =>
