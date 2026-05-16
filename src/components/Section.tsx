@@ -12,24 +12,18 @@ export function Section({
   children: ReactNode;
   className?: string;
 }) {
-  const isLightBackground = id !== "home" && id !== "venue" && id !== "box";
-  
+  const isVenue = id === "venue";
+  const homeAccent = "oklch(0.34 0.13 18)";
+  const activeAccent = isVenue ? accent : homeAccent;
+
   return (
     <section
       id={id}
-      className={`relative w-full px-4 py-16 md:px-8 md:py-32 ${className} ${isLightBackground ? "text-maroon-deep" : "text-ivory"}`}
+      className={`relative w-full px-4 py-16 md:px-8 md:py-32 ${className} text-ivory`}
       style={{
-        background: isLightBackground
-          ? (accent.startsWith("oklch") && accent === "oklch(0.30 0.13 18)" ? "oklch(0.95 0.05 340)" : accent)
-          : `radial-gradient(ellipse at top, ${accent} 0%, oklch(0.16 0.07 22) 70%, oklch(0.10 0.05 20) 100%)`,
+        background: `radial-gradient(ellipse at top, ${activeAccent} 0%, oklch(0.16 0.07 22) 70%, oklch(0.10 0.05 20) 100%)`,
       }}
     >
-      {isLightBackground && (
-        <div 
-          className="absolute inset-0 opacity-[0.05] pointer-events-none" 
-          style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/silk-weave.png')" }} 
-        />
-      )}
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         whileInView={{ opacity: 1, y: 0 }}

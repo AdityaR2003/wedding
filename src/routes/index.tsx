@@ -382,7 +382,7 @@ function StorySection() {
   return (
     <Section id="story" accent="#EBAEA8">
       <div className="mx-auto max-w-4xl">
-        <h2 className="mt-2 text-center font-script text-6xl text-maroon-deep md:text-7xl">Journey of Love</h2>
+        <h2 className="mt-2 text-center font-script text-6xl text-gold md:text-7xl">Journey of Love</h2>
         <OrnateDivider />
         <div className="relative mt-20 px-4 md:px-0">
           <TimelineLine />
@@ -399,17 +399,17 @@ function StorySection() {
               <div className={`absolute left-1/2 z-10 -translate-x-1/2`}>
                 <motion.div 
                   whileHover={{ scale: 1.2, rotate: 360 }}
-                  className="flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full border-2 border-maroon-deep bg-white text-maroon-deep shadow-lg transition-colors hover:bg-maroon-deep hover:text-white"
+                  className="flex h-10 w-10 md:h-12 md:w-12 items-center justify-center rounded-full border-2 border-gold bg-maroon-deep text-gold shadow-lg transition-colors hover:bg-gold hover:text-maroon-deep"
                 >
                   <m.icon className="h-4 w-4 md:h-5 md:w-5" />
                 </motion.div>
               </div>
               <div className={`w-1/2 ${i % 2 === 0 ? "pr-5 md:pr-16" : "pl-5 md:pl-16"}`}>
-                <div className="group overflow-hidden rounded-3xl border border-maroon-deep/10 bg-white/40 p-1 backdrop-blur-md transition-all hover:border-maroon-deep/30 hover:shadow-xl">
-                  <div className="overflow-hidden rounded-2xl bg-maroon-deep/5 p-4 md:p-8">
+                <div className="group overflow-hidden rounded-3xl border border-gold/10 bg-maroon-deep/40 p-1 backdrop-blur-md transition-all hover:border-gold/30 hover:shadow-xl">
+                  <div className="overflow-hidden rounded-2xl bg-black/20 p-4 md:p-8">
                     <p className="font-display text-[8px] md:text-xs tracking-[0.4em] text-gold/80 uppercase">{m.date}</p>
-                    <h3 className="mt-1 md:mt-2 font-script text-2xl md:text-5xl text-maroon-deep leading-tight">{m.title}</h3>
-                    <p className="mt-2 md:mt-4 font-serif text-maroon-deep/80 text-[10px] md:text-lg leading-relaxed">{m.text}</p>
+                    <h3 className="mt-1 md:mt-2 font-script text-2xl md:text-5xl text-gold leading-tight">{m.title}</h3>
+                    <p className="mt-2 md:mt-4 font-serif text-ivory/80 text-[10px] md:text-lg leading-relaxed">{m.text}</p>
                     
                     {m.img && (
                       <div className="mt-4 md:mt-6 h-32 md:h-48 overflow-hidden rounded-xl border-4 border-double border-gold/60 shadow-[0_0_15px_rgba(255,215,0,0.2)] transition-all duration-700 group-hover:border-gold">
@@ -554,7 +554,7 @@ function FamilyCard({ family, index }: { family: any, index: number }) {
 
 function FamilySection({ guestName }: { guestName: string }) {
   return (
-    <Section id="family" accent="oklch(0.28 0.10 250)">
+    <Section id="family" accent="oklch(0.34 0.13 18)">
       <div className="mx-auto max-w-5xl px-4">
         <SandeshPatr variant="dark" className="!max-w-none">
           <div className="text-center">
@@ -626,10 +626,10 @@ function WishingAndWellwingsSection({ guestName }: { guestName: string }) {
   };
 
   return (
-    <Section id="wishes" accent="oklch(0.95 0.05 340)">
+    <Section id="wishes" accent="oklch(0.34 0.13 18)">
       <div className="mx-auto max-w-4xl text-center">
         <p className="font-display text-xl tracking-[0.3em] text-gold uppercase drop-shadow-sm">Share Your Love</p>
-        <h2 className="mt-2 font-script text-5xl text-maroon-deep md:text-6xl">Wishing & Wellwings</h2>
+        <h2 className="mt-2 font-script text-5xl text-gold md:text-6xl">Wishing & Wellwings</h2>
         <OrnateDivider />
 
         <div className="mt-12 grid gap-8 lg:grid-cols-[1fr_1.5fr]">
@@ -744,7 +744,7 @@ function WishingAndWellwingsSection({ guestName }: { guestName: string }) {
             </div>
             
             {/* Gradient Mask for scroll */}
-            <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#fdf2f8] to-transparent" />
+            <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-16 bg-gradient-to-t from-[#0a0a0a] to-transparent" />
           </div>
         </div>
         <SectionNavButtons backId="family" nextId="accept" />
@@ -757,18 +757,13 @@ function WishingAndWellwingsSection({ guestName }: { guestName: string }) {
 /* ======================== RITUALS HUB ======================== */
 function RitualsHub({ guestName }: { guestName: string }) {
   return (
-    <Section id="rituals" accent="oklch(0.28 0.10 18)">
-      <div className="mx-auto max-w-6xl">
+    <Section id="rituals" accent="oklch(0.34 0.13 18)">
+      <div className="mx-auto max-w-5xl">
         <div className="text-center">
-
-          <h2 className="mt-2 font-script text-6xl text-gold-gradient md:text-7xl">Ritual Ceremonies</h2>
+          <p className="font-display text-sm tracking-[0.4em] text-gold/60 uppercase">Wedding Rituals</p>
+          <h2 className="mt-2 font-script text-6xl text-gold md:text-7xl">Traditional Ceremonies</h2>
           <OrnateDivider />
-          <p className="mx-auto mt-4 max-w-xl font-serif italic text-ivory/80">
-            Five sacred celebrations — each a chapter of love, tradition &amp; joy.
-          </p>
-          <p className="mt-2 font-display text-[10px] tracking-[0.5em] text-pink-300/60 uppercase">
-            ★ Scratch each card to reveal the ceremony ★
-          </p>
+          <p className="mt-4 font-serif italic text-ivory/80 text-lg md:text-xl">Join us as we embark on this sacred journey of togetherness.</p>
         </div>
 
         {/* Uniform 5-card grid — all same fixed height */}
@@ -975,7 +970,7 @@ function AcceptInvitationSection({ guestName }: { guestName: string }) {
   }
 
   return (
-    <Section id="accept" accent="oklch(0.30 0.13 18)">
+    <Section id="accept" accent="oklch(0.34 0.13 18)">
       <div className="mx-auto max-w-2xl text-center">
         <p className="font-display text-xs tracking-[0.5em] text-gold/80">YOU ARE INVITED</p>
         <h2 className="mt-2 font-script text-6xl text-gold-gradient md:text-7xl">Join Us</h2>
@@ -1001,7 +996,7 @@ function AcceptInvitationSection({ guestName }: { guestName: string }) {
                   whileHover={{ scale: 1.06 }}
                   whileTap={{ scale: 0.96 }}
                   onClick={handleAccept}
-                  className="mt-10 inline-flex items-center gap-3 rounded-full border border-gold bg-gradient-to-r from-[oklch(0.78_0.14_80)] to-[oklch(0.65_0.13_60)] px-10 py-4 font-display text-sm tracking-[0.3em] text-maroon-deep shadow-[0_10px_50px_-10px_oklch(0.78_0.14_80)] transition"
+                  className="mt-10 inline-flex items-center gap-3 rounded-full border border-gold bg-black/40 px-10 py-4 font-display text-sm tracking-[0.3em] text-gold shadow-sm transition hover:bg-gold hover:text-black"
                 >
                   <span>🎉</span> ACCEPT INVITATION <span>🎉</span>
                 </motion.button>
@@ -1012,7 +1007,7 @@ function AcceptInvitationSection({ guestName }: { guestName: string }) {
                 initial={{ scale: 0.8, opacity: 0, rotate: -3 }}
                 animate={{ scale: 1, opacity: 1, rotate: 0 }}
                 transition={{ type: "spring", duration: 0.8, bounce: 0.4 }}
-                className="relative z-10 w-full rounded-3xl border-2 border-gold p-10 text-center shadow-[0_0_50px_rgba(255,215,0,0.3)] bg-gradient-to-br from-[oklch(0.18_0.10_18)] to-[oklch(0.28_0.13_18)] overflow-hidden"
+                className="relative z-10 w-full rounded-3xl border border-gold p-10 text-center shadow-[0_0_50px_rgba(255,215,0,0.1)] bg-black/40 backdrop-blur-md overflow-hidden"
               >
                 {/* Internal Confetti burst */}
                 <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden">
@@ -1033,7 +1028,7 @@ function AcceptInvitationSection({ guestName }: { guestName: string }) {
                   <motion.h2 
                     animate={{ scale: [1, 1.05, 1], filter: ["drop-shadow(0 0 10px rgba(255,215,0,0.2))", "drop-shadow(0 0 25px rgba(255,215,0,0.6))", "drop-shadow(0 0 10px rgba(255,215,0,0.2))"] }}
                     transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
-                    className="mt-5 font-script text-5xl text-gold-gradient"
+                    className="mt-5 font-script text-5xl text-gold"
                   >
                     Thank You, {guestName}!
                   </motion.h2>
@@ -1069,10 +1064,10 @@ function GetInTouchSection() {
   ];
 
   return (
-    <Section id="contact" accent="oklch(0.95 0.05 340)">
+    <Section id="contact" accent="oklch(0.34 0.13 18)">
       <div className="mx-auto max-w-4xl text-center">
-        <p className="font-display text-[10px] tracking-[0.5em] text-maroon/60 uppercase">GET IN TOUCH</p>
-        <h3 className="mt-2 font-script text-6xl text-maroon-deep md:text-7xl">Contact Us</h3>
+        <p className="font-display text-[10px] tracking-[0.5em] text-gold/60 uppercase">GET IN TOUCH</p>
+        <h3 className="mt-2 font-script text-6xl text-gold md:text-7xl">Contact Us</h3>
         <OrnateDivider />
         <div className="mt-10 grid gap-6 grid-cols-1 sm:grid-cols-2 px-4">
         {contacts.map((c) => (
