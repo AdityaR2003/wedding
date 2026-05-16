@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import pinkGanesha from "@/assets/pink_ganesha.png";
+import pinkSilk from "@/assets/pink_silk_texture_1778651645974.png";
 import { LotusPetals } from "./Petals";
 
 interface WeddingBoxProps {
@@ -76,12 +77,18 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
             {/* Box Thickness (Side Walls) - Darker Pink */}
             <div className="absolute inset-0 translate-z-[-20px] bg-[#9e2a44] rounded-2xl shadow-[0_15px_40px_rgba(0,0,0,0.4)]" />
 
-            {/* Main Box Body - Vibrant Pink */}
-            <div className="absolute inset-0 bg-[#d14d6b] rounded-2xl shadow-[inset_0_0_20px_rgba(0,0,0,0.2),0_8px_0_#9e2a44] border-4 border-gold/40 flex flex-col items-center justify-center p-8 overflow-hidden transform-gpu">
+            {/* Main Box Body - Vibrant Pink with Silk Texture */}
+            <div 
+              className="absolute inset-0 bg-[#d14d6b] rounded-2xl shadow-[inset_0_0_20px_rgba(0,0,0,0.2),0_8px_0_#9e2a44] border-4 border-gold/40 flex flex-col items-center justify-center p-8 overflow-hidden transform-gpu"
+              style={{ 
+                backgroundImage: `url(${pinkSilk})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center'
+              }}
+            >
               
-              {/* Subtle Silk Pattern (Removed dark vignette) */}
-              <div className="absolute inset-0 opacity-[0.1] pointer-events-none mix-blend-overlay" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/black-paper.png')" }} />
-              <div className="absolute inset-0 opacity-[0.05] pointer-events-none" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/damask.png')" }} />
+              {/* Subtle Overlay for depth */}
+              <div className="absolute inset-0 bg-gradient-to-b from-white/10 via-transparent to-black/20 pointer-events-none" />
 
               {/* Magical Sparkles */}
               {[...Array(6)].map((_, i) => (
@@ -117,7 +124,7 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
               <div className="absolute bottom-2 right-2 w-14 h-14 border-b-4 border-r-4 border-gold/60 rounded-br-lg" />
 
               {/* Welcome Text */}
-              <h2 className="relative z-10 font-deva text-5xl text-gold-gradient text-center mb-6">शुभ विवाह</h2>
+              <h2 className="relative z-10 font-deva text-5xl text-gold-gradient text-center mb-6 drop-shadow-[0_2px_4px_rgba(0,0,0,0.3)]">शुभ विवाह</h2>
 
               {/* Ganeshji Image with Pillars */}
               <div className="relative z-10 flex items-end gap-5 mb-6" style={{ mixBlendMode: "screen" }}>
@@ -156,17 +163,24 @@ export const WeddingBox: React.FC<WeddingBoxProps> = ({ guestName, onOpen }) => 
                 </motion.div>
               </div>
               
-              {/* Guest Name */}
-              <div className="relative z-10 py-5 px-8 border-y border-gold/40 my-4 bg-white/10 backdrop-blur-sm">
-                <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#d14d6b] px-4 font-display text-[10px] tracking-[0.4em] text-gold font-bold uppercase">Special Guest</span>
-                <p className="font-serif text-3xl text-ivory text-center tracking-widest">{guestName}</p>
+              {/* Guest Name Section */}
+              <div className="relative z-10 flex flex-col items-center mt-2">
+                {/* Special Guest Badge */}
+                <div className="bg-[#d14d6b] px-6 py-1 rounded-full border border-gold/30 shadow-sm mb-[-12px] z-20">
+                  <span className="font-display text-[9px] tracking-[0.4em] text-gold font-bold uppercase">Special Guest</span>
+                </div>
+                
+                {/* Name Banner */}
+                <div className="bg-white/90 backdrop-blur-sm px-10 py-5 rounded-sm shadow-xl border-x-4 border-gold/20 min-w-[240px]">
+                  <p className="font-serif text-3xl text-maroon-deep text-center tracking-widest font-medium">{guestName}</p>
+                </div>
               </div>
 
               {/* Open Message */}
               <motion.div
                 animate={{ y: [0, 8, 0] }}
                 transition={{ duration: 2, repeat: Infinity }}
-                className="relative z-10 mt-8 flex flex-col items-center gap-4"
+                className="relative z-10 mt-10 flex flex-col items-center gap-4"
               >
                 <div className="h-px w-24 bg-gradient-to-r from-transparent via-gold to-transparent" />
                 <p className="font-display text-sm tracking-[0.5em] text-gold font-bold animate-pulse">TAP TO OPEN</p>
